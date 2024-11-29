@@ -44,10 +44,16 @@ int main(void)
  OCR1B = speed;
  uint16_t cnt = 0;
  while (1){ 
-motorForward(5000,5000);
-motorBackward(0,0);
+motorForward(0,0);
+motorBackward(5000,5000);
+tankDraaiLinks(2000,2000);
+tankDraaiRechts(2000,2000);
 	}}motorForward(int speed1, int speed2){	 PORTB = 0b00000110;
 	 PORTD = 0b00000000;	 OCR1A = speed1;
 	 OCR1B = speed2;	 		 }motorBackward(int speed1, int speed2){	 PORTB = 0b00000111;
 	 PORTD = 0b10000000;	 OCR1A = speed1;
-	 OCR1B = speed2;	 	}
+	 OCR1B = speed2;	 	}tankDraaiLinks(int speed1, int speed2){	 PORTB = 0b00000110;
+	 PORTD = 0b10000000;	 OCR1A = speed1;
+	 OCR1B = speed2;}tankDraaiRechts(int speed1, int speed2){	 PORTB = 0b00000111;
+	 PORTD = 0b00000000;	 OCR1A = speed1;
+	 OCR1B = speed2;}
