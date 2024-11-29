@@ -3,29 +3,29 @@ Motorcontrol.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  000001b0  2**0
+  0 .data         00000000  00800100  00800100  0000013c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         0000015c  00000000  00000000  00000054  2**1
+  1 .text         000000e8  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  000001b0  2**0
+  2 .comment      00000030  00000000  00000000  0000013c  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000001e0  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000016c  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000040  00000000  00000000  00000220  2**0
+  4 .debug_aranges 00000040  00000000  00000000  000001ac  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000887  00000000  00000000  00000260  2**0
+  5 .debug_info   000007d3  00000000  00000000  000001ec  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000695  00000000  00000000  00000ae7  2**0
+  6 .debug_abbrev 00000695  00000000  00000000  000009bf  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   000002e1  00000000  00000000  0000117c  2**0
+  7 .debug_line   000002c2  00000000  00000000  00001054  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000064  00000000  00000000  00001460  2**2
+  8 .debug_frame  00000064  00000000  00000000  00001318  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000003a5  00000000  00000000  000014c4  2**0
+  9 .debug_str    000003a9  00000000  00000000  0000137c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000098  00000000  00000000  00001869  2**0
+ 10 .debug_loc    00000098  00000000  00000000  00001725  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000030  00000000  00000000  00001901  2**0
+ 11 .debug_ranges 00000030  00000000  00000000  000017bd  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -65,17 +65,17 @@ Disassembly of section .text:
   6e:	d8 e0       	ldi	r29, 0x08	; 8
   70:	de bf       	out	0x3e, r29	; 62
   72:	cd bf       	out	0x3d, r28	; 61
-  74:	0e 94 72 00 	call	0xe4	; 0xe4 <main>
-  78:	0c 94 ac 00 	jmp	0x158	; 0x158 <_exit>
+  74:	0e 94 4c 00 	call	0x98	; 0x98 <main>
+  78:	0c 94 72 00 	jmp	0xe4	; 0xe4 <_exit>
 
 0000007c <__bad_interrupt>:
   7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 00000080 <motorForward>:
-tankDraaiRechts(1000,1000);
 	}
 }
 
+// Motor forward functie voor snellheid aanpassen integers van 0 -> 4999 maximaal
 motorForward(int speed1, int speed2){
 	 PORTB = 0b00000110;
   80:	26 e0       	ldi	r18, 0x06	; 6
@@ -91,141 +91,66 @@ motorForward(int speed1, int speed2){
 }
   96:	08 95       	ret
 
-00000098 <motorBackward>:
-
-motorBackward(int speed1, int speed2){
-	 PORTB = 0b00000111;
-  98:	27 e0       	ldi	r18, 0x07	; 7
-  9a:	25 b9       	out	0x05, r18	; 5
-	 PORTD = 0b10000000;
-  9c:	20 e8       	ldi	r18, 0x80	; 128
-  9e:	2b b9       	out	0x0b, r18	; 11
-	 OCR1A = speed1;
-  a0:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
-  a4:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
-	 OCR1B = speed2;	 	
-  a8:	70 93 8b 00 	sts	0x008B, r23	; 0x80008b <__TEXT_REGION_LENGTH__+0x7f808b>
-  ac:	60 93 8a 00 	sts	0x008A, r22	; 0x80008a <__TEXT_REGION_LENGTH__+0x7f808a>
-}
-  b0:	08 95       	ret
-
-000000b2 <tankDraaiLinks>:
-
-tankDraaiLinks(int speed1, int speed2){
-	 PORTB = 0b00000110;
-  b2:	26 e0       	ldi	r18, 0x06	; 6
-  b4:	25 b9       	out	0x05, r18	; 5
-	 PORTD = 0b10000000;
-  b6:	20 e8       	ldi	r18, 0x80	; 128
-  b8:	2b b9       	out	0x0b, r18	; 11
-	 OCR1A = speed1;
-  ba:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
-  be:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
-	 OCR1B = speed2;
-  c2:	70 93 8b 00 	sts	0x008B, r23	; 0x80008b <__TEXT_REGION_LENGTH__+0x7f808b>
-  c6:	60 93 8a 00 	sts	0x008A, r22	; 0x80008a <__TEXT_REGION_LENGTH__+0x7f808a>
-}
-  ca:	08 95       	ret
-
-000000cc <tankDraaiRechts>:
-
-tankDraaiRechts(int speed1, int speed2){
-	 PORTB = 0b00000111;
-  cc:	27 e0       	ldi	r18, 0x07	; 7
-  ce:	25 b9       	out	0x05, r18	; 5
-	 PORTD = 0b00000000;
-  d0:	1b b8       	out	0x0b, r1	; 11
-	 OCR1A = speed1;
-  d2:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
-  d6:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
-	 OCR1B = speed2;
-  da:	70 93 8b 00 	sts	0x008B, r23	; 0x80008b <__TEXT_REGION_LENGTH__+0x7f808b>
-  de:	60 93 8a 00 	sts	0x008A, r22	; 0x80008a <__TEXT_REGION_LENGTH__+0x7f808a>
-  e2:	08 95       	ret
-
-000000e4 <main>:
-
+00000098 <main>:
+// Snellheid gaat van 0 naar 4999 0 stillstand 4999 max
 int main(void)
 {
-	int speed = 2500;
- // PB0 - PB5 output, rest input
+int initSpeed = 0;
+ // PB0 - PB5 output, rest input gehardforced voor nu
  DDRB = 0b00111111;
-  e4:	8f e3       	ldi	r24, 0x3F	; 63
-  e6:	84 b9       	out	0x04, r24	; 4
+  98:	8f e3       	ldi	r24, 0x3F	; 63
+  9a:	84 b9       	out	0x04, r24	; 4
  DDRD = 0b10000000;
-  e8:	80 e8       	ldi	r24, 0x80	; 128
-  ea:	8a b9       	out	0x0a, r24	; 10
+  9c:	80 e8       	ldi	r24, 0x80	; 128
+  9e:	8a b9       	out	0x0a, r24	; 10
  // - CS1[2:0] = 011 : 64 prescaler
  //
  // TOP = (F_CPU / (F_PWM * N)) - 1
  // = (16MHz / (50Hz * 64)) - 1
  // = 4999
  TCCR1A |= (1<<WGM11);
-  ec:	e0 e8       	ldi	r30, 0x80	; 128
-  ee:	f0 e0       	ldi	r31, 0x00	; 0
-  f0:	80 81       	ld	r24, Z
-  f2:	82 60       	ori	r24, 0x02	; 2
-  f4:	80 83       	st	Z, r24
+  a0:	e0 e8       	ldi	r30, 0x80	; 128
+  a2:	f0 e0       	ldi	r31, 0x00	; 0
+  a4:	80 81       	ld	r24, Z
+  a6:	82 60       	ori	r24, 0x02	; 2
+  a8:	80 83       	st	Z, r24
  TCCR1B |= (1<<WGM13) | (1<<WGM12) | (1<<CS11) | (1<<CS10);
-  f6:	a1 e8       	ldi	r26, 0x81	; 129
-  f8:	b0 e0       	ldi	r27, 0x00	; 0
-  fa:	8c 91       	ld	r24, X
-  fc:	8b 61       	ori	r24, 0x1B	; 27
-  fe:	8c 93       	st	X, r24
+  aa:	a1 e8       	ldi	r26, 0x81	; 129
+  ac:	b0 e0       	ldi	r27, 0x00	; 0
+  ae:	8c 91       	ld	r24, X
+  b0:	8b 61       	ori	r24, 0x1B	; 27
+  b2:	8c 93       	st	X, r24
  ICR1 = 4999;
- 100:	87 e8       	ldi	r24, 0x87	; 135
- 102:	93 e1       	ldi	r25, 0x13	; 19
- 104:	90 93 87 00 	sts	0x0087, r25	; 0x800087 <__TEXT_REGION_LENGTH__+0x7f8087>
- 108:	80 93 86 00 	sts	0x0086, r24	; 0x800086 <__TEXT_REGION_LENGTH__+0x7f8086>
- // The mode is fast-PWM
- // COM1A[1:0] = 10 : Clear OC1A/OC1B on compare match, set OC1A/OC1B at
- // BOTTOM (non-inverting mode)
- // COM1B[1:0] = 11 : Set OC1A/OC1B on compare match, clear OC1A/OC1B at
- // BOTTOM (inverting mode)
- TCCR1A |= (1<<COM1A1) | (1<<COM1A0) | (1<<COM1B1) | (1<<COM1B0);
- 10c:	80 81       	ld	r24, Z
- 10e:	80 6f       	ori	r24, 0xF0	; 240
- 110:	80 83       	st	Z, r24
+  b4:	87 e8       	ldi	r24, 0x87	; 135
+  b6:	93 e1       	ldi	r25, 0x13	; 19
+  b8:	90 93 87 00 	sts	0x0087, r25	; 0x800087 <__TEXT_REGION_LENGTH__+0x7f8087>
+  bc:	80 93 86 00 	sts	0x0086, r24	; 0x800086 <__TEXT_REGION_LENGTH__+0x7f8086>
+ // Set Compare Output Mode for both channels A and B
 
- // Set the initial duty cycle for both channels to 50%
- OCR1A = speed;
- 112:	84 ec       	ldi	r24, 0xC4	; 196
- 114:	99 e0       	ldi	r25, 0x09	; 9
- 116:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
- 11a:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
- OCR1B = speed;
- 11e:	90 93 8b 00 	sts	0x008B, r25	; 0x80008b <__TEXT_REGION_LENGTH__+0x7f808b>
- 122:	80 93 8a 00 	sts	0x008A, r24	; 0x80008a <__TEXT_REGION_LENGTH__+0x7f808a>
- uint16_t cnt = 0;
- while (1){ 
-motorForward(0,0);
- 126:	60 e0       	ldi	r22, 0x00	; 0
- 128:	70 e0       	ldi	r23, 0x00	; 0
- 12a:	80 e0       	ldi	r24, 0x00	; 0
- 12c:	90 e0       	ldi	r25, 0x00	; 0
- 12e:	0e 94 40 00 	call	0x80	; 0x80 <motorForward>
-motorBackward(5000,5000);
- 132:	68 e8       	ldi	r22, 0x88	; 136
- 134:	73 e1       	ldi	r23, 0x13	; 19
- 136:	88 e8       	ldi	r24, 0x88	; 136
- 138:	93 e1       	ldi	r25, 0x13	; 19
- 13a:	0e 94 4c 00 	call	0x98	; 0x98 <motorBackward>
-tankDraaiLinks(2000,2000);
- 13e:	60 ed       	ldi	r22, 0xD0	; 208
- 140:	77 e0       	ldi	r23, 0x07	; 7
- 142:	80 ed       	ldi	r24, 0xD0	; 208
- 144:	97 e0       	ldi	r25, 0x07	; 7
- 146:	0e 94 59 00 	call	0xb2	; 0xb2 <tankDraaiLinks>
-tankDraaiRechts(1000,1000);
- 14a:	68 ee       	ldi	r22, 0xE8	; 232
- 14c:	73 e0       	ldi	r23, 0x03	; 3
- 14e:	88 ee       	ldi	r24, 0xE8	; 232
- 150:	93 e0       	ldi	r25, 0x03	; 3
- 152:	0e 94 66 00 	call	0xcc	; 0xcc <tankDraaiRechts>
- 156:	e7 cf       	rjmp	.-50     	; 0x126 <main+0x42>
+ TCCR1A |= (1<<COM1A1)  | (1<<COM1B1) ; //  zodat het 0 -> 4999 gaat voor snelheid zonder inverse 4999 -> 0
+  c0:	80 81       	ld	r24, Z
+  c2:	80 6a       	ori	r24, 0xA0	; 160
+  c4:	80 83       	st	Z, r24
 
-00000158 <_exit>:
- 158:	f8 94       	cli
+// Initial speed set
+ OCR1A = 0;
+  c6:	10 92 89 00 	sts	0x0089, r1	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
+  ca:	10 92 88 00 	sts	0x0088, r1	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
+ OCR1B = 0;
+  ce:	10 92 8b 00 	sts	0x008B, r1	; 0x80008b <__TEXT_REGION_LENGTH__+0x7f808b>
+  d2:	10 92 8a 00 	sts	0x008A, r1	; 0x80008a <__TEXT_REGION_LENGTH__+0x7f808a>
+	while (1)
+	{
+		motorForward(4000,4000);
+  d6:	60 ea       	ldi	r22, 0xA0	; 160
+  d8:	7f e0       	ldi	r23, 0x0F	; 15
+  da:	80 ea       	ldi	r24, 0xA0	; 160
+  dc:	9f e0       	ldi	r25, 0x0F	; 15
+  de:	0e 94 40 00 	call	0x80	; 0x80 <motorForward>
+  e2:	f9 cf       	rjmp	.-14     	; 0xd6 <main+0x3e>
 
-0000015a <__stop_program>:
- 15a:	ff cf       	rjmp	.-2      	; 0x15a <__stop_program>
+000000e4 <_exit>:
+  e4:	f8 94       	cli
+
+000000e6 <__stop_program>:
+  e6:	ff cf       	rjmp	.-2      	; 0xe6 <__stop_program>

@@ -12,7 +12,7 @@
 // Snellheid gaat van 0 naar 4999 0 stillstand 4999 max
 int main(void)
 {
-int initSpeed = 2500;
+int initSpeed = 0;
  // PB0 - PB5 output, rest input gehardforced voor nu
  DDRB = 0b00111111;
  DDRD = 0b10000000;
@@ -33,11 +33,11 @@ int initSpeed = 2500;
  ICR1 = 4999;
  // Set Compare Output Mode for both channels A and B
 
- TCCR1A |= (1<<COM1A1) | (1<<COM1A0) | (1<<COM1B1) | (1<<COM1B0); // beide geinverted zodat het 0 -> 4999 gaat voor snelheid zonder inverse 4999 -> 0
+ TCCR1A |= (1<<COM1A1)  | (1<<COM1B1) ; //  zodat het 0 -> 4999 gaat voor snelheid zonder inverse 4999 -> 0
 
 // Initial speed set
- OCR1A = initSpeed;
- OCR1B = initSpeed;}// Motor forward functie voor snellheid aanpassen integers van 0 -> 4999 maximaalmotorForward(int speed1, int speed2){	 PORTB = 0b00000110;
+ OCR1A = 0;
+ OCR1B = 0;}// Motor forward functie voor snellheid aanpassen integers van 0 -> 4999 maximaalmotorForward(int speed1, int speed2){	 PORTB = 0b00000110;
 	 PORTD = 0b00000000;	 OCR1A = speed1;
 	 OCR1B = speed2;	 		 }// Motor backward functie voor snellheid aanpassen integers van 0 -> 4999 maximaalmotorBackward(int speed1, int speed2){	 PORTB = 0b00000111;
 	 PORTD = 0b10000000;	 OCR1A = speed1;
