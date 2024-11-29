@@ -2,7 +2,7 @@
  * ultrasoonMode.h
  *
  * Created: 29-11-2024 09:21:42
- *  Author: timde
+ *  Author: Huub Bouwman, Myrddin van Hallem, Tim de Kuijper and Paul Nguyen
  */ 
 
 

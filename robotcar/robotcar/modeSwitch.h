@@ -2,7 +2,7 @@
  * modeSwitch.h
  *
  * Created: 29-11-2024 10:14:48
- *  Author: timde
+ *  Author: Huub Bouwman, Myrddin van Hallem, Tim de Kuijper and Paul Nguyen
  */ 
 
 
