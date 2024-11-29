@@ -20,10 +20,12 @@
 int main(void){
 
     DDRD |= (1<<DDD5) | (1<<DDD7);
-	DDRC |= (1<<DDC0);
+	DDRC |= (1<<DDC0) | (1<<DDC3);
 	DDRB |= (1<<DDB0) | (1<<DDB1) | (1<<DDB2);
 	
-
+	PORTC |= (1<<PORTC3);
+	_delay_ms(500);
+	PORTC &= ~(1<<PORTC3);
 	
 	// PWM setup
 	TCCR1A |= (1<<WGM11);
@@ -36,7 +38,7 @@ int main(void){
 
     while (1){
 		//slaveMode();
-		motorForward(200);
+		//motorForward(200);
     }
 }
 

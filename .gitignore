@@ -2,3 +2,10 @@
 *.d
 *.o
 /robotcar/robotcar/Debug
+*.o
+*.o
+*.elf
+*.hex
+*.lss
+*.map
+*.srec
