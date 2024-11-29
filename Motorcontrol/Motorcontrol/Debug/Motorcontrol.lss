@@ -72,7 +72,7 @@ Disassembly of section .text:
   7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 00000080 <motorForward>:
-tankDraaiRechts(2000,2000);
+tankDraaiRechts(1000,1000);
 	}
 }
 
@@ -216,11 +216,11 @@ tankDraaiLinks(2000,2000);
  142:	80 ed       	ldi	r24, 0xD0	; 208
  144:	97 e0       	ldi	r25, 0x07	; 7
  146:	0e 94 59 00 	call	0xb2	; 0xb2 <tankDraaiLinks>
-tankDraaiRechts(2000,2000);
- 14a:	60 ed       	ldi	r22, 0xD0	; 208
- 14c:	77 e0       	ldi	r23, 0x07	; 7
- 14e:	80 ed       	ldi	r24, 0xD0	; 208
- 150:	97 e0       	ldi	r25, 0x07	; 7
+tankDraaiRechts(1000,1000);
+ 14a:	68 ee       	ldi	r22, 0xE8	; 232
+ 14c:	73 e0       	ldi	r23, 0x03	; 3
+ 14e:	88 ee       	ldi	r24, 0xE8	; 232
+ 150:	93 e0       	ldi	r25, 0x03	; 3
  152:	0e 94 66 00 	call	0xcc	; 0xcc <tankDraaiRechts>
  156:	e7 cf       	rjmp	.-50     	; 0x126 <main+0x42>
 

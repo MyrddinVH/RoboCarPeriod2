@@ -9,11 +9,11 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-
+// Snellheid gaat van 0 naar 4999 0 stillstand 4999 max
 int main(void)
 {
-	int speed = 2500;
- // PB0 - PB5 output, rest input
+int initSpeed = 2500;
+ // PB0 - PB5 output, rest input gehardforced voor nu
  DDRB = 0b00111111;
  DDRD = 0b10000000;
  // Configure Timer/counter 1 to generate an interrupt approximately every second
@@ -32,28 +32,17 @@ int main(void)
  TCCR1B |= (1<<WGM13) | (1<<WGM12) | (1<<CS11) | (1<<CS10);
  ICR1 = 4999;
  // Set Compare Output Mode for both channels A and B
- // The mode is fast-PWM
- // COM1A[1:0] = 10 : Clear OC1A/OC1B on compare match, set OC1A/OC1B at
- // BOTTOM (non-inverting mode)
- // COM1B[1:0] = 11 : Set OC1A/OC1B on compare match, clear OC1A/OC1B at
- // BOTTOM (inverting mode)
- TCCR1A |= (1<<COM1A1) | (1<<COM1A0) | (1<<COM1B1) | (1<<COM1B0);
 
- // Set the initial duty cycle for both channels to 50%
- OCR1A = speed;
- OCR1B = speed;
- uint16_t cnt = 0;
- while (1){ 
-motorForward(0,0);
-motorBackward(5000,5000);
-tankDraaiLinks(2000,2000);
-tankDraaiRechts(2000,2000);
-	}}motorForward(int speed1, int speed2){	 PORTB = 0b00000110;
+ TCCR1A |= (1<<COM1A1) | (1<<COM1A0) | (1<<COM1B1) | (1<<COM1B0); // beide geinverted zodat het 0 -> 4999 gaat voor snelheid zonder inverse 4999 -> 0
+
+// Initial speed set
+ OCR1A = initSpeed;
+ OCR1B = initSpeed;}// Motor forward functie voor snellheid aanpassen integers van 0 -> 4999 maximaalmotorForward(int speed1, int speed2){	 PORTB = 0b00000110;
 	 PORTD = 0b00000000;	 OCR1A = speed1;
-	 OCR1B = speed2;	 		 }motorBackward(int speed1, int speed2){	 PORTB = 0b00000111;
+	 OCR1B = speed2;	 		 }// Motor backward functie voor snellheid aanpassen integers van 0 -> 4999 maximaalmotorBackward(int speed1, int speed2){	 PORTB = 0b00000111;
 	 PORTD = 0b10000000;	 OCR1A = speed1;
-	 OCR1B = speed2;	 	}tankDraaiLinks(int speed1, int speed2){	 PORTB = 0b00000110;
+	 OCR1B = speed2;	 	}// Tank draai functie voor snellheid aanpassen integers van 0 -> 4999 maximaaltankDraaiLinks(int speed1, int speed2){	 PORTB = 0b00000110;
 	 PORTD = 0b10000000;	 OCR1A = speed1;
-	 OCR1B = speed2;}tankDraaiRechts(int speed1, int speed2){	 PORTB = 0b00000111;
+	 OCR1B = speed2;}// Tank draai functie voor snellheid aanpassen integers van 0 -> 4999 maximaaltankDraaiRechts(int speed1, int speed2){	 PORTB = 0b00000111;
 	 PORTD = 0b00000000;	 OCR1A = speed1;
 	 OCR1B = speed2;}
