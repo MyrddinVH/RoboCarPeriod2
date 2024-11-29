@@ -40,14 +40,14 @@ void slaveMode(){
 	}
 	
 	if(forward){
-		
+		motorForward(20);
 	}
 	
 	if(left){
-		
+		tankTurnLeft(20);
 	}
 	
 	if(right){
-		
+		tankTurnRight(20);
 	}
 }
