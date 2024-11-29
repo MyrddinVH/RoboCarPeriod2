@@ -9,7 +9,8 @@
 #ifndef SLAVEMODE_H_
 #define SLAVEMODE_H_
 
-
+void slaveModeVariables();
+void slaveMode();
 
 
 

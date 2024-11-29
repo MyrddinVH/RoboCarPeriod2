@@ -9,9 +9,9 @@
 #ifndef MOTORCONTROL_H_
 #define MOTORCONTROL_H_
 
-motorForward(int speed1, int speed2);
-motorBackward(int speed1, int speed2);
-tankDraaiLinks(int speed1, int speed2);
-tankDraaiRechts(int speed1, int speed2);
+void motorForward(int speed1, int speed2);
+void motorBackward(int speed1, int speed2);
+void tankTurnLeft(int speed1, int speed2);
+void tankTurnRight(int speed1, int speed2);
 
 #endif /* MOTORCONTROL_H_ */

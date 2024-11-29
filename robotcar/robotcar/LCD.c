@@ -1,6 +1,6 @@
 /*
  * LCD.c
  *
- * Created: 28-11-2024 13:13:16
- *  Author: timde
+ * Created: 29-11-2024 09:19:27
+ *  Author: Huub Bouwman, Myrddin van Hallem, Tim de Kuijper and Paul Nguyen
  */ 
