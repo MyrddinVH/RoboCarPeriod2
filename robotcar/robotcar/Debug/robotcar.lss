@@ -3,27 +3,29 @@ robotcar.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  000000f8  2**0
+  0 .data         00000000  00800100  00800100  000001e4  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000000a4  00000000  00000000  00000054  2**1
+  1 .text         00000190  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  000000f8  2**0
+  2 .comment      00000030  00000000  00000000  000001e4  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000128  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000214  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000040  00000000  00000000  00000168  2**0
+  4 .debug_aranges 00000078  00000000  00000000  00000254  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   0000076a  00000000  00000000  000001a8  2**0
+  5 .debug_info   000009ad  00000000  00000000  000002cc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000684  00000000  00000000  00000912  2**0
+  6 .debug_abbrev 00000764  00000000  00000000  00000c79  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   000002ac  00000000  00000000  00000f96  2**0
+  7 .debug_line   0000044b  00000000  00000000  000013dd  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000048  00000000  00000000  00001244  2**2
+  8 .debug_frame  000000a8  00000000  00000000  00001828  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000003a8  00000000  00000000  0000128c  2**0
+  9 .debug_str    00000409  00000000  00000000  000018d0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_ranges 00000020  00000000  00000000  00001634  2**0
+ 10 .debug_loc    000000e7  00000000  00000000  00001cd9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000048  00000000  00000000  00001dc0  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -64,17 +66,17 @@ Disassembly of section .text:
   70:	de bf       	out	0x3e, r29	; 62
   72:	cd bf       	out	0x3d, r28	; 61
   74:	0e 94 40 00 	call	0x80	; 0x80 <main>
-  78:	0c 94 50 00 	jmp	0xa0	; 0xa0 <_exit>
+  78:	0c 94 c6 00 	jmp	0x18c	; 0x18c <_exit>
 
 0000007c <__bad_interrupt>:
   7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 00000080 <main>:
-#include "timeSaving.h"
 #include "modeSwitch.h"
 
 
 int main(void){
+
     DDRD |= (1<<DDD5) | (1<<DDD7);
   80:	8a b1       	in	r24, 0x0a	; 10
   82:	80 6a       	ori	r24, 0xA0	; 160
@@ -88,37 +90,216 @@ int main(void){
   8e:	87 60       	ori	r24, 0x07	; 7
   90:	84 b9       	out	0x04, r24	; 4
 	
+
+	
+	// PWM setup
+	TCCR1A |= (1<<WGM11);
+  92:	e0 e8       	ldi	r30, 0x80	; 128
+  94:	f0 e0       	ldi	r31, 0x00	; 0
+  96:	80 81       	ld	r24, Z
+  98:	82 60       	ori	r24, 0x02	; 2
+  9a:	80 83       	st	Z, r24
+	TCCR1B |= (1<<WGM13) | (1<<WGM12) | (1<<CS11) | (1<<CS10);
+  9c:	a1 e8       	ldi	r26, 0x81	; 129
+  9e:	b0 e0       	ldi	r27, 0x00	; 0
+  a0:	8c 91       	ld	r24, X
+  a2:	8b 61       	ori	r24, 0x1B	; 27
+  a4:	8c 93       	st	X, r24
+	ICR1 = 4999;
+  a6:	87 e8       	ldi	r24, 0x87	; 135
+  a8:	93 e1       	ldi	r25, 0x13	; 19
+  aa:	90 93 87 00 	sts	0x0087, r25	; 0x800087 <__TEXT_REGION_LENGTH__+0x7f8087>
+  ae:	80 93 86 00 	sts	0x0086, r24	; 0x800086 <__TEXT_REGION_LENGTH__+0x7f8086>
+	TCCR1A |= (1<<COM1A1)  | (1<<COM1B1) ;
+  b2:	80 81       	ld	r24, Z
+  b4:	80 6a       	ori	r24, 0xA0	; 160
+  b6:	80 83       	st	Z, r24
+	OCR1A = 0;
+  b8:	10 92 89 00 	sts	0x0089, r1	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
+  bc:	10 92 88 00 	sts	0x0088, r1	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
+	OCR1B = 0;
+  c0:	10 92 8b 00 	sts	0x008B, r1	; 0x80008b <__TEXT_REGION_LENGTH__+0x7f808b>
+  c4:	10 92 8a 00 	sts	0x008A, r1	; 0x80008a <__TEXT_REGION_LENGTH__+0x7f808a>
+			
+
     while (1){
 		slaveMode();
-  92:	0e 94 4c 00 	call	0x98	; 0x98 <slaveMode>
-  96:	fd cf       	rjmp	.-6      	; 0x92 <main+0x12>
+  c8:	0e 94 9c 00 	call	0x138	; 0x138 <slaveMode>
+  cc:	fd cf       	rjmp	.-6      	; 0xc8 <main+0x48>
 
-00000098 <slaveMode>:
+000000ce <motorForward>:
+// Motor backward functie voor snellheid aanpassen integers van 0 -> 4999 maximaal
+void motorBackward(int speed1, int speed2){
+	PORTB |= 0b00000111;
+	PORTD |= 0b10000000;
+	OCR1A = 4999 - speed1;
+	OCR1B = 4999 - speed2;
+  ce:	9c 01       	movw	r18, r24
+  d0:	95 b1       	in	r25, 0x05	; 5
+  d2:	96 60       	ori	r25, 0x06	; 6
+  d4:	95 b9       	out	0x05, r25	; 5
+  d6:	8b b1       	in	r24, 0x0b	; 11
+  d8:	8b b9       	out	0x0b, r24	; 11
+  da:	30 93 89 00 	sts	0x0089, r19	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
+  de:	20 93 88 00 	sts	0x0088, r18	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
+  e2:	70 93 8b 00 	sts	0x008B, r23	; 0x80008b <__TEXT_REGION_LENGTH__+0x7f808b>
+  e6:	60 93 8a 00 	sts	0x008A, r22	; 0x80008a <__TEXT_REGION_LENGTH__+0x7f808a>
+  ea:	08 95       	ret
+
+000000ec <tankTurnLeft>:
+}
+
+// Tank draai functie voor snellheid aanpassen integers van 0 -> 4999 maximaal
+void tankTurnLeft(int speed1, int speed2){
+	PORTB |= 0b00000110;
+  ec:	25 b1       	in	r18, 0x05	; 5
+  ee:	26 60       	ori	r18, 0x06	; 6
+  f0:	25 b9       	out	0x05, r18	; 5
+	PORTD |= 0b10000000;
+  f2:	2b b1       	in	r18, 0x0b	; 11
+  f4:	20 68       	ori	r18, 0x80	; 128
+  f6:	2b b9       	out	0x0b, r18	; 11
+	OCR1A = 4999 - speed1;
+  f8:	27 e8       	ldi	r18, 0x87	; 135
+  fa:	33 e1       	ldi	r19, 0x13	; 19
+  fc:	28 1b       	sub	r18, r24
+  fe:	39 0b       	sbc	r19, r25
+ 100:	30 93 89 00 	sts	0x0089, r19	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
+ 104:	20 93 88 00 	sts	0x0088, r18	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
+	OCR1B = speed2;
+ 108:	70 93 8b 00 	sts	0x008B, r23	; 0x80008b <__TEXT_REGION_LENGTH__+0x7f808b>
+ 10c:	60 93 8a 00 	sts	0x008A, r22	; 0x80008a <__TEXT_REGION_LENGTH__+0x7f808a>
+ 110:	08 95       	ret
+
+00000112 <tankTurnRight>:
+}
+// Tank draai functie voor snellheid aanpassen integers van 0 -> 4999 maximaal
+void tankTurnRight(int speed1, int speed2){
+ 112:	9c 01       	movw	r18, r24
+	PORTB |= 0b00000111;
+ 114:	95 b1       	in	r25, 0x05	; 5
+ 116:	97 60       	ori	r25, 0x07	; 7
+ 118:	95 b9       	out	0x05, r25	; 5
+	PORTD |= 0b00000000;
+ 11a:	8b b1       	in	r24, 0x0b	; 11
+ 11c:	8b b9       	out	0x0b, r24	; 11
+	OCR1A = speed1;
+ 11e:	30 93 89 00 	sts	0x0089, r19	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
+ 122:	20 93 88 00 	sts	0x0088, r18	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
+	OCR1B = 4999 - speed2;
+ 126:	87 e8       	ldi	r24, 0x87	; 135
+ 128:	93 e1       	ldi	r25, 0x13	; 19
+ 12a:	86 1b       	sub	r24, r22
+ 12c:	97 0b       	sbc	r25, r23
+ 12e:	90 93 8b 00 	sts	0x008B, r25	; 0x80008b <__TEXT_REGION_LENGTH__+0x7f808b>
+ 132:	80 93 8a 00 	sts	0x008A, r24	; 0x80008a <__TEXT_REGION_LENGTH__+0x7f808a>
+ 136:	08 95       	ret
+
+00000138 <slaveMode>:
+#define F_CPU 16000000UL
+#include <avr/io.h>
+#include <util/delay.h>
+#include <stdbool.h>
+
+void slaveMode(){
+ 138:	cf 93       	push	r28
+ 13a:	df 93       	push	r29
 	_Bool right;
 	int slaveMaskForward = 0b00101000;
 	int slaveMaskLeft = 0b00011000;
 	int slaveMaskRight = 0b00110000;
 	
 	if((PINB & slaveMaskForward) == 0x28){
-  98:	83 b1       	in	r24, 0x03	; 3
+ 13c:	83 b1       	in	r24, 0x03	; 3
 		forward = true;
 		left = false;
 		right = false;
 	}
 	
 	if((PINB & slaveMaskLeft) == 0x18){
-  9a:	83 b1       	in	r24, 0x03	; 3
+ 13e:	83 b1       	in	r24, 0x03	; 3
+ 140:	88 71       	andi	r24, 0x18	; 24
+ 142:	88 31       	cpi	r24, 0x18	; 24
+ 144:	19 f0       	breq	.+6      	; 0x14c <slaveMode+0x14>
+ 146:	c0 e0       	ldi	r28, 0x00	; 0
+ 148:	91 e0       	ldi	r25, 0x01	; 1
+ 14a:	02 c0       	rjmp	.+4      	; 0x150 <slaveMode+0x18>
 		forward = false;
+		left = true;
+ 14c:	c1 e0       	ldi	r28, 0x01	; 1
+		left = false;
+		right = false;
+	}
+	
+	if((PINB & slaveMaskLeft) == 0x18){
+		forward = false;
+ 14e:	90 e0       	ldi	r25, 0x00	; 0
 		left = true;
 		right = false;
 	}
 	
 	if((PINB & slaveMaskRight) == 0x30){
-  9c:	83 b1       	in	r24, 0x03	; 3
-  9e:	08 95       	ret
+ 150:	83 b1       	in	r24, 0x03	; 3
+ 152:	80 73       	andi	r24, 0x30	; 48
+ 154:	80 33       	cpi	r24, 0x30	; 48
+ 156:	11 f0       	breq	.+4      	; 0x15c <slaveMode+0x24>
+ 158:	d0 e0       	ldi	r29, 0x00	; 0
+ 15a:	03 c0       	rjmp	.+6      	; 0x162 <slaveMode+0x2a>
+		forward = false;
+		left = false;
+		right = true;
+ 15c:	d1 e0       	ldi	r29, 0x01	; 1
+		right = false;
+	}
+	
+	if((PINB & slaveMaskRight) == 0x30){
+		forward = false;
+		left = false;
+ 15e:	c0 e0       	ldi	r28, 0x00	; 0
+		left = true;
+		right = false;
+	}
+	
+	if((PINB & slaveMaskRight) == 0x30){
+		forward = false;
+ 160:	90 e0       	ldi	r25, 0x00	; 0
+		left = false;
+		right = true;
+	}
+	
+	if(forward){
+ 162:	99 23       	and	r25, r25
+ 164:	21 f0       	breq	.+8      	; 0x16e <slaveMode+0x36>
+		motorForward(20);
+ 166:	84 e1       	ldi	r24, 0x14	; 20
+ 168:	90 e0       	ldi	r25, 0x00	; 0
+ 16a:	0e 94 67 00 	call	0xce	; 0xce <motorForward>
+	}
+	
+	if(left){
+ 16e:	cc 23       	and	r28, r28
+ 170:	21 f0       	breq	.+8      	; 0x17a <slaveMode+0x42>
+		tankTurnLeft(20);
+ 172:	84 e1       	ldi	r24, 0x14	; 20
+ 174:	90 e0       	ldi	r25, 0x00	; 0
+ 176:	0e 94 76 00 	call	0xec	; 0xec <tankTurnLeft>
+	}
+	
+	if(right){
+ 17a:	dd 23       	and	r29, r29
+ 17c:	21 f0       	breq	.+8      	; 0x186 <slaveMode+0x4e>
+		tankTurnRight(20);
+ 17e:	84 e1       	ldi	r24, 0x14	; 20
+ 180:	90 e0       	ldi	r25, 0x00	; 0
+ 182:	0e 94 89 00 	call	0x112	; 0x112 <tankTurnRight>
+	}
+}
+ 186:	df 91       	pop	r29
+ 188:	cf 91       	pop	r28
+ 18a:	08 95       	ret
 
-000000a0 <_exit>:
-  a0:	f8 94       	cli
+0000018c <_exit>:
+ 18c:	f8 94       	cli
 
-000000a2 <__stop_program>:
-  a2:	ff cf       	rjmp	.-2      	; 0xa2 <__stop_program>
+0000018e <__stop_program>:
+ 18e:	ff cf       	rjmp	.-2      	; 0x18e <__stop_program>

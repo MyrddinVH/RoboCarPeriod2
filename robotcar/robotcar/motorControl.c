@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-/*
- * motorControl.c
- *
- * Created: 29-11-2024 09:19:42
- *  Author: timde
- */ 
-=======
 /*
  * motorControl.c
  *
@@ -26,4 +18,3 @@
 	OCR1B = speed2;}// Tank draai functie voor snellheid aanpassen integers van 0 -> 4999 maximaalvoid tankTurnRight(int speed1, int speed2){	PORTB |= 0b00000111;
 	PORTD |= 0b00000000;	OCR1A = speed1;
 	OCR1B = 4999 - speed2;}
->>>>>>> motorControl

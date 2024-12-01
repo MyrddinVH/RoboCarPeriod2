@@ -18,12 +18,12 @@
 
 
 int main(void){
-<<<<<<< HEAD
+
     DDRD |= (1<<DDD5) | (1<<DDD7);
 	DDRC |= (1<<DDC0);
 	DDRB |= (1<<DDB0) | (1<<DDB1) | (1<<DDB2);
 	
-=======
+
 	
 	// PWM setup
 	TCCR1A |= (1<<WGM11);
@@ -33,9 +33,10 @@ int main(void){
 	OCR1A = 0;
 	OCR1B = 0;
 			
->>>>>>> motorControl
+
     while (1){
-		slaveMode();
+		//slaveMode();
+		motorForward(200);
     }
 }
 
