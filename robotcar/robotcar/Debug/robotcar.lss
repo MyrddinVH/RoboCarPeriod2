@@ -21,11 +21,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   8 .debug_frame  000000a8  00000000  00000000  00001828  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000409  00000000  00000000  000018d0  2**0
+  9 .debug_str    0000044f  00000000  00000000  000018d0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    000000e7  00000000  00000000  00001cd9  2**0
+ 10 .debug_loc    000000e7  00000000  00000000  00001d1f  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000048  00000000  00000000  00001dc0  2**0
+ 11 .debug_ranges 00000048  00000000  00000000  00001e06  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -72,66 +72,44 @@ Disassembly of section .text:
   7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 00000080 <main>:
-#include "modeSwitch.h"
-
-
-int main(void){
-
-    DDRD |= (1<<DDD5) | (1<<DDD7);
   80:	8a b1       	in	r24, 0x0a	; 10
   82:	80 6a       	ori	r24, 0xA0	; 160
   84:	8a b9       	out	0x0a, r24	; 10
-	DDRC |= (1<<DDC0);
   86:	87 b1       	in	r24, 0x07	; 7
   88:	81 60       	ori	r24, 0x01	; 1
   8a:	87 b9       	out	0x07, r24	; 7
-	DDRB |= (1<<DDB0) | (1<<DDB1) | (1<<DDB2);
   8c:	84 b1       	in	r24, 0x04	; 4
   8e:	87 60       	ori	r24, 0x07	; 7
   90:	84 b9       	out	0x04, r24	; 4
-	
-
-	
-	// PWM setup
-	TCCR1A |= (1<<WGM11);
   92:	e0 e8       	ldi	r30, 0x80	; 128
   94:	f0 e0       	ldi	r31, 0x00	; 0
   96:	80 81       	ld	r24, Z
   98:	82 60       	ori	r24, 0x02	; 2
   9a:	80 83       	st	Z, r24
-	TCCR1B |= (1<<WGM13) | (1<<WGM12) | (1<<CS11) | (1<<CS10);
   9c:	a1 e8       	ldi	r26, 0x81	; 129
   9e:	b0 e0       	ldi	r27, 0x00	; 0
   a0:	8c 91       	ld	r24, X
   a2:	8b 61       	ori	r24, 0x1B	; 27
   a4:	8c 93       	st	X, r24
-	ICR1 = 4999;
   a6:	87 e8       	ldi	r24, 0x87	; 135
   a8:	93 e1       	ldi	r25, 0x13	; 19
   aa:	90 93 87 00 	sts	0x0087, r25	; 0x800087 <__TEXT_REGION_LENGTH__+0x7f8087>
   ae:	80 93 86 00 	sts	0x0086, r24	; 0x800086 <__TEXT_REGION_LENGTH__+0x7f8086>
-	TCCR1A |= (1<<COM1A1)  | (1<<COM1B1) ;
   b2:	80 81       	ld	r24, Z
   b4:	80 6a       	ori	r24, 0xA0	; 160
   b6:	80 83       	st	Z, r24
-	OCR1A = 0;
   b8:	10 92 89 00 	sts	0x0089, r1	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
   bc:	10 92 88 00 	sts	0x0088, r1	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
-	OCR1B = 0;
   c0:	10 92 8b 00 	sts	0x008B, r1	; 0x80008b <__TEXT_REGION_LENGTH__+0x7f808b>
   c4:	10 92 8a 00 	sts	0x008A, r1	; 0x80008a <__TEXT_REGION_LENGTH__+0x7f808a>
-			
-
-    while (1){
-		slaveMode();
   c8:	0e 94 9c 00 	call	0x138	; 0x138 <slaveMode>
   cc:	fd cf       	rjmp	.-6      	; 0xc8 <main+0x48>
 
 000000ce <motorForward>:
 // Motor backward functie voor snellheid aanpassen integers van 0 -> 4999 maximaal
 void motorBackward(int speed1, int speed2){
-	PORTB |= 0b00000111;
-	PORTD |= 0b10000000;
+	PORTB |= 0b00000111; // PortB bit 1 aanzetten
+	PORTD |= 0b10000000; // PortB bit  aanzetten
 	OCR1A = 4999 - speed1;
 	OCR1B = 4999 - speed2;
   ce:	9c 01       	movw	r18, r24
@@ -196,27 +174,9 @@ void tankTurnRight(int speed1, int speed2){
  136:	08 95       	ret
 
 00000138 <slaveMode>:
-#define F_CPU 16000000UL
-#include <avr/io.h>
-#include <util/delay.h>
-#include <stdbool.h>
-
-void slaveMode(){
  138:	cf 93       	push	r28
  13a:	df 93       	push	r29
-	_Bool right;
-	int slaveMaskForward = 0b00101000;
-	int slaveMaskLeft = 0b00011000;
-	int slaveMaskRight = 0b00110000;
-	
-	if((PINB & slaveMaskForward) == 0x28){
  13c:	83 b1       	in	r24, 0x03	; 3
-		forward = true;
-		left = false;
-		right = false;
-	}
-	
-	if((PINB & slaveMaskLeft) == 0x18){
  13e:	83 b1       	in	r24, 0x03	; 3
  140:	88 71       	andi	r24, 0x18	; 24
  142:	88 31       	cpi	r24, 0x18	; 24
@@ -224,76 +184,32 @@ void slaveMode(){
  146:	c0 e0       	ldi	r28, 0x00	; 0
  148:	91 e0       	ldi	r25, 0x01	; 1
  14a:	02 c0       	rjmp	.+4      	; 0x150 <slaveMode+0x18>
-		forward = false;
-		left = true;
  14c:	c1 e0       	ldi	r28, 0x01	; 1
-		left = false;
-		right = false;
-	}
-	
-	if((PINB & slaveMaskLeft) == 0x18){
-		forward = false;
  14e:	90 e0       	ldi	r25, 0x00	; 0
-		left = true;
-		right = false;
-	}
-	
-	if((PINB & slaveMaskRight) == 0x30){
  150:	83 b1       	in	r24, 0x03	; 3
  152:	80 73       	andi	r24, 0x30	; 48
  154:	80 33       	cpi	r24, 0x30	; 48
  156:	11 f0       	breq	.+4      	; 0x15c <slaveMode+0x24>
  158:	d0 e0       	ldi	r29, 0x00	; 0
  15a:	03 c0       	rjmp	.+6      	; 0x162 <slaveMode+0x2a>
-		forward = false;
-		left = false;
-		right = true;
  15c:	d1 e0       	ldi	r29, 0x01	; 1
-		right = false;
-	}
-	
-	if((PINB & slaveMaskRight) == 0x30){
-		forward = false;
-		left = false;
  15e:	c0 e0       	ldi	r28, 0x00	; 0
-		left = true;
-		right = false;
-	}
-	
-	if((PINB & slaveMaskRight) == 0x30){
-		forward = false;
  160:	90 e0       	ldi	r25, 0x00	; 0
-		left = false;
-		right = true;
-	}
-	
-	if(forward){
  162:	99 23       	and	r25, r25
  164:	21 f0       	breq	.+8      	; 0x16e <slaveMode+0x36>
-		motorForward(20);
  166:	84 e1       	ldi	r24, 0x14	; 20
  168:	90 e0       	ldi	r25, 0x00	; 0
  16a:	0e 94 67 00 	call	0xce	; 0xce <motorForward>
-	}
-	
-	if(left){
  16e:	cc 23       	and	r28, r28
  170:	21 f0       	breq	.+8      	; 0x17a <slaveMode+0x42>
-		tankTurnLeft(20);
  172:	84 e1       	ldi	r24, 0x14	; 20
  174:	90 e0       	ldi	r25, 0x00	; 0
  176:	0e 94 76 00 	call	0xec	; 0xec <tankTurnLeft>
-	}
-	
-	if(right){
  17a:	dd 23       	and	r29, r29
  17c:	21 f0       	breq	.+8      	; 0x186 <slaveMode+0x4e>
-		tankTurnRight(20);
  17e:	84 e1       	ldi	r24, 0x14	; 20
  180:	90 e0       	ldi	r25, 0x00	; 0
  182:	0e 94 89 00 	call	0x112	; 0x112 <tankTurnRight>
-	}
-}
  186:	df 91       	pop	r29
  188:	cf 91       	pop	r28
  18a:	08 95       	ret

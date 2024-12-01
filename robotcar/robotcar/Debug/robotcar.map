@@ -453,14 +453,14 @@ END GROUP
  .debug_frame   0x00000024       0x54 motorControl.o
  .debug_frame   0x00000078       0x30 slaveMode.o
 
-.debug_str      0x00000000      0x409
+.debug_str      0x00000000      0x44f
  *(.debug_str)
  .debug_str     0x00000000      0x208 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_str     0x00000208      0x151 main.o
                                 0x185 (size before relaxing)
- .debug_str     0x00000359       0x58 motorControl.o
-                                0x1c2 (size before relaxing)
- .debug_str     0x000003b1       0x58 slaveMode.o
+ .debug_str     0x00000359       0x9e motorControl.o
+                                0x1c1 (size before relaxing)
+ .debug_str     0x000003f7       0x58 slaveMode.o
                                 0x1eb (size before relaxing)
 
 .debug_loc      0x00000000       0xe7
