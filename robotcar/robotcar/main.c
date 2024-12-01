@@ -36,7 +36,8 @@ int main(void){
 
     while (1){
 		//slaveMode();
-		motorForward(200);
+		motorForward(200,200);
+		motorBackward(200,200);
     }
 }
 
