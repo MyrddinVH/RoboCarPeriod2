@@ -116,56 +116,54 @@ int main(void){
 			
 
     while (1){
-		//slaveMode();
-		motorForward(200,50);
-  a8:	62 e3       	ldi	r22, 0x32	; 50
+tankTurnRight(200,200);
+  a8:	68 ec       	ldi	r22, 0xC8	; 200
   aa:	70 e0       	ldi	r23, 0x00	; 0
   ac:	88 ec       	ldi	r24, 0xC8	; 200
   ae:	90 e0       	ldi	r25, 0x00	; 0
-  b0:	0e 94 61 00 	call	0xc2	; 0xc2 <motorForward>
-		motorBackward(200,100);
-  b4:	64 e6       	ldi	r22, 0x64	; 100
+  b0:	0e 94 6b 00 	call	0xd6	; 0xd6 <tankTurnRight>
+tankTurnLeft(200,200);
+  b4:	68 ec       	ldi	r22, 0xC8	; 200
   b6:	70 e0       	ldi	r23, 0x00	; 0
   b8:	88 ec       	ldi	r24, 0xC8	; 200
   ba:	90 e0       	ldi	r25, 0x00	; 0
-  bc:	0e 94 6a 00 	call	0xd4	; 0xd4 <motorBackward>
+  bc:	0e 94 61 00 	call	0xc2	; 0xc2 <tankTurnLeft>
   c0:	f3 cf       	rjmp	.-26     	; 0xa8 <main+0x28>
 
-000000c2 <motorForward>:
-#include <avr/io.h>
-#include <util/delay.h>
+000000c2 <tankTurnLeft>:
+	OCR0B = 255 - speed2;
+}
 
-// Motor forward functie voor snellheid aanpassen integers van 0 -> 255 maximaal
-motorForward(int speed1, int speed2){
-	PORTB &= ~(1<<PORTB0); // PortB bit 0 uitzetten
+// Tank draai functie voor snellheid aanpassen integers van 0 -> 255 maximaal
+tankTurnLeft(int speed1, int speed2){
+	PORTB &= ~(1<<PORTB0);
   c2:	95 b1       	in	r25, 0x05	; 5
   c4:	9e 7f       	andi	r25, 0xFE	; 254
   c6:	95 b9       	out	0x05, r25	; 5
-	PORTD &= ~(1<<PORTD7); // PortB bit 7 uitzetten
+	PORTD |= (1<<PORTD7);
   c8:	9b b1       	in	r25, 0x0b	; 11
-  ca:	9f 77       	andi	r25, 0x7F	; 127
+  ca:	90 68       	ori	r25, 0x80	; 128
   cc:	9b b9       	out	0x0b, r25	; 11
-	OCR0A = speed1;
-  ce:	87 bd       	out	0x27, r24	; 39
-	OCR0B = speed2;
-  d0:	68 bd       	out	0x28, r22	; 40
-}
-  d2:	08 95       	ret
-
-000000d4 <motorBackward>:
-
-// Motor backward functie voor snellheid aanpassen integers van 0 -> 255 maximaal
-motorBackward(int speed1, int speed2){
-	PORTB |= (1<<PORTB0); // PortB bit 0 aanzetten
-  d4:	95 b1       	in	r25, 0x05	; 5
-  d6:	91 60       	ori	r25, 0x01	; 1
-  d8:	95 b9       	out	0x05, r25	; 5
-	PORTD |= (1<<PORTD7); // PortB bit 7 aanzetten
-  da:	9b b1       	in	r25, 0x0b	; 11
-  dc:	90 68       	ori	r25, 0x80	; 128
-  de:	9b b9       	out	0x0b, r25	; 11
 	OCR0A = 255 - speed1;
-  e0:	80 95       	com	r24
+  ce:	80 95       	com	r24
+  d0:	87 bd       	out	0x27, r24	; 39
+	OCR0B = speed2;
+  d2:	68 bd       	out	0x28, r22	; 40
+}
+  d4:	08 95       	ret
+
+000000d6 <tankTurnRight>:
+// Tank draai functie voor snellheid aanpassen integers van 0 -> 255 maximaal
+tankTurnRight(int speed1, int speed2){
+	PORTB |= (1<<PORTB0);
+  d6:	95 b1       	in	r25, 0x05	; 5
+  d8:	91 60       	ori	r25, 0x01	; 1
+  da:	95 b9       	out	0x05, r25	; 5
+	PORTD &= ~(1<<PORTD7);
+  dc:	9b b1       	in	r25, 0x0b	; 11
+  de:	9f 77       	andi	r25, 0x7F	; 127
+  e0:	9b b9       	out	0x0b, r25	; 11
+	OCR0A = speed1;
   e2:	87 bd       	out	0x27, r24	; 39
 	OCR0B = 255 - speed2;
   e4:	60 95       	com	r22

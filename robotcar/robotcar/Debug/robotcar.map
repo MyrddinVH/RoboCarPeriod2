@@ -25,10 +25,10 @@ Discarded input sections
  .text          0x00000000        0x0 motorControl.o
  .data          0x00000000        0x0 motorControl.o
  .bss           0x00000000        0x0 motorControl.o
- .text.tankTurnLeft
-                0x00000000       0x14 motorControl.o
- .text.tankTurnRight
-                0x00000000       0x14 motorControl.o
+ .text.motorForward
+                0x00000000       0x12 motorControl.o
+ .text.motorBackward
+                0x00000000       0x16 motorControl.o
  .text          0x00000000        0x0 remoteControl.o
  .data          0x00000000        0x0 remoteControl.o
  .bss           0x00000000        0x0 remoteControl.o
@@ -297,12 +297,12 @@ END GROUP
  *(.text.*)
  .text.main     0x00000080       0x42 main.o
                 0x00000080                main
- .text.motorForward
-                0x000000c2       0x12 motorControl.o
-                0x000000c2                motorForward
- .text.motorBackward
-                0x000000d4       0x16 motorControl.o
-                0x000000d4                motorBackward
+ .text.tankTurnLeft
+                0x000000c2       0x14 motorControl.o
+                0x000000c2                tankTurnLeft
+ .text.tankTurnRight
+                0x000000d6       0x14 motorControl.o
+                0x000000d6                tankTurnRight
                 0x000000ea                . = ALIGN (0x2)
  *(.fini9)
  .fini9         0x000000ea        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
