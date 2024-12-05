@@ -3,29 +3,29 @@ robotcar.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  00000142  2**0
+  0 .data         00000000  00800100  00800100  000001e8  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000000ee  00000000  00000000  00000054  2**1
+  1 .text         00000194  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  00000142  2**0
+  2 .comment      00000030  00000000  00000000  000001e8  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000174  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000218  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000058  00000000  00000000  000001b4  2**0
+  4 .debug_aranges 00000058  00000000  00000000  00000258  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000842  00000000  00000000  0000020c  2**0
+  5 .debug_info   00000a30  00000000  00000000  000002b0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000006bd  00000000  00000000  00000a4e  2**0
+  6 .debug_abbrev 00000740  00000000  00000000  00000ce0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000370  00000000  00000000  0000110b  2**0
+  7 .debug_line   00000441  00000000  00000000  00001420  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000078  00000000  00000000  0000147c  2**2
+  8 .debug_frame  00000078  00000000  00000000  00001864  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    0000039e  00000000  00000000  000014f4  2**0
+  9 .debug_str    000003e9  00000000  00000000  000018dc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    000000e4  00000000  00000000  00001892  2**0
+ 10 .debug_loc    00000204  00000000  00000000  00001cc5  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000038  00000000  00000000  00001976  2**0
+ 11 .debug_ranges 00000038  00000000  00000000  00001ec9  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -66,7 +66,7 @@ Disassembly of section .text:
   70:	de bf       	out	0x3e, r29	; 62
   72:	cd bf       	out	0x3d, r28	; 61
   74:	0e 94 40 00 	call	0x80	; 0x80 <main>
-  78:	0c 94 75 00 	jmp	0xea	; 0xea <_exit>
+  78:	0c 94 c8 00 	jmp	0x190	; 0x190 <_exit>
 
 0000007c <__bad_interrupt>:
   7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -116,63 +116,176 @@ int main(void){
 			
 
     while (1){
-tankTurnRight(200,200);
+		motorForward(200,200);
   a8:	68 ec       	ldi	r22, 0xC8	; 200
   aa:	70 e0       	ldi	r23, 0x00	; 0
   ac:	88 ec       	ldi	r24, 0xC8	; 200
   ae:	90 e0       	ldi	r25, 0x00	; 0
-  b0:	0e 94 6b 00 	call	0xd6	; 0xd6 <tankTurnRight>
-tankTurnLeft(200,200);
-  b4:	68 ec       	ldi	r22, 0xC8	; 200
-  b6:	70 e0       	ldi	r23, 0x00	; 0
-  b8:	88 ec       	ldi	r24, 0xC8	; 200
-  ba:	90 e0       	ldi	r25, 0x00	; 0
-  bc:	0e 94 61 00 	call	0xc2	; 0xc2 <tankTurnLeft>
-  c0:	f3 cf       	rjmp	.-26     	; 0xa8 <main+0x28>
+  b0:	0e 94 a0 00 	call	0x140	; 0x140 <motorForward>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
 
-000000c2 <tankTurnLeft>:
-	OCR0B = 255 - speed2;
+	__builtin_avr_delay_cycles(__ticks_dc);
+  b4:	2f ef       	ldi	r18, 0xFF	; 255
+  b6:	8b e7       	ldi	r24, 0x7B	; 123
+  b8:	92 e9       	ldi	r25, 0x92	; 146
+  ba:	21 50       	subi	r18, 0x01	; 1
+  bc:	80 40       	sbci	r24, 0x00	; 0
+  be:	90 40       	sbci	r25, 0x00	; 0
+  c0:	e1 f7       	brne	.-8      	; 0xba <main+0x3a>
+  c2:	00 c0       	rjmp	.+0      	; 0xc4 <main+0x44>
+  c4:	00 00       	nop
+		_delay_ms(3000);
+		motorBackward(200,200);
+  c6:	68 ec       	ldi	r22, 0xC8	; 200
+  c8:	70 e0       	ldi	r23, 0x00	; 0
+  ca:	88 ec       	ldi	r24, 0xC8	; 200
+  cc:	90 e0       	ldi	r25, 0x00	; 0
+  ce:	0e 94 a9 00 	call	0x152	; 0x152 <motorBackward>
+  d2:	2f ef       	ldi	r18, 0xFF	; 255
+  d4:	8b e7       	ldi	r24, 0x7B	; 123
+  d6:	92 e9       	ldi	r25, 0x92	; 146
+  d8:	21 50       	subi	r18, 0x01	; 1
+  da:	80 40       	sbci	r24, 0x00	; 0
+  dc:	90 40       	sbci	r25, 0x00	; 0
+  de:	e1 f7       	brne	.-8      	; 0xd8 <main+0x58>
+  e0:	00 c0       	rjmp	.+0      	; 0xe2 <main+0x62>
+  e2:	00 00       	nop
+		_delay_ms(3000);
+		tankTurnLeft(200,200);
+  e4:	68 ec       	ldi	r22, 0xC8	; 200
+  e6:	70 e0       	ldi	r23, 0x00	; 0
+  e8:	88 ec       	ldi	r24, 0xC8	; 200
+  ea:	90 e0       	ldi	r25, 0x00	; 0
+  ec:	0e 94 b4 00 	call	0x168	; 0x168 <tankTurnLeft>
+  f0:	2f ef       	ldi	r18, 0xFF	; 255
+  f2:	8b e7       	ldi	r24, 0x7B	; 123
+  f4:	92 e9       	ldi	r25, 0x92	; 146
+  f6:	21 50       	subi	r18, 0x01	; 1
+  f8:	80 40       	sbci	r24, 0x00	; 0
+  fa:	90 40       	sbci	r25, 0x00	; 0
+  fc:	e1 f7       	brne	.-8      	; 0xf6 <main+0x76>
+  fe:	00 c0       	rjmp	.+0      	; 0x100 <main+0x80>
+ 100:	00 00       	nop
+		_delay_ms(3000);
+		tankTurnRight(200,200);
+ 102:	68 ec       	ldi	r22, 0xC8	; 200
+ 104:	70 e0       	ldi	r23, 0x00	; 0
+ 106:	88 ec       	ldi	r24, 0xC8	; 200
+ 108:	90 e0       	ldi	r25, 0x00	; 0
+ 10a:	0e 94 be 00 	call	0x17c	; 0x17c <tankTurnRight>
+ 10e:	2f ef       	ldi	r18, 0xFF	; 255
+ 110:	8b e7       	ldi	r24, 0x7B	; 123
+ 112:	92 e9       	ldi	r25, 0x92	; 146
+ 114:	21 50       	subi	r18, 0x01	; 1
+ 116:	80 40       	sbci	r24, 0x00	; 0
+ 118:	90 40       	sbci	r25, 0x00	; 0
+ 11a:	e1 f7       	brne	.-8      	; 0x114 <main+0x94>
+ 11c:	00 c0       	rjmp	.+0      	; 0x11e <main+0x9e>
+ 11e:	00 00       	nop
+		_delay_ms(3000);
+		motorForward(0,0);
+ 120:	60 e0       	ldi	r22, 0x00	; 0
+ 122:	70 e0       	ldi	r23, 0x00	; 0
+ 124:	80 e0       	ldi	r24, 0x00	; 0
+ 126:	90 e0       	ldi	r25, 0x00	; 0
+ 128:	0e 94 a0 00 	call	0x140	; 0x140 <motorForward>
+ 12c:	2f ef       	ldi	r18, 0xFF	; 255
+ 12e:	8b e7       	ldi	r24, 0x7B	; 123
+ 130:	92 e9       	ldi	r25, 0x92	; 146
+ 132:	21 50       	subi	r18, 0x01	; 1
+ 134:	80 40       	sbci	r24, 0x00	; 0
+ 136:	90 40       	sbci	r25, 0x00	; 0
+ 138:	e1 f7       	brne	.-8      	; 0x132 <main+0xb2>
+ 13a:	00 c0       	rjmp	.+0      	; 0x13c <main+0xbc>
+ 13c:	00 00       	nop
+ 13e:	b4 cf       	rjmp	.-152    	; 0xa8 <main+0x28>
+
+00000140 <motorForward>:
+#include <avr/io.h>
+#include <util/delay.h>
+
+// Motor forward functie voor snellheid aanpassen integers van 0 -> 255 maximaal
+motorForward(int speed1, int speed2){
+	PORTB &= ~(1<<PORTB0); // PortB bit 0 uitzetten
+ 140:	95 b1       	in	r25, 0x05	; 5
+ 142:	9e 7f       	andi	r25, 0xFE	; 254
+ 144:	95 b9       	out	0x05, r25	; 5
+	PORTD &= ~(1<<PORTD7); // PortB bit 7 uitzetten
+ 146:	9b b1       	in	r25, 0x0b	; 11
+ 148:	9f 77       	andi	r25, 0x7F	; 127
+ 14a:	9b b9       	out	0x0b, r25	; 11
+	OCR0A = speed1;
+ 14c:	87 bd       	out	0x27, r24	; 39
+	OCR0B = speed2;
+ 14e:	68 bd       	out	0x28, r22	; 40
 }
+ 150:	08 95       	ret
+
+00000152 <motorBackward>:
+
+// Motor backward functie voor snellheid aanpassen integers van 0 -> 255 maximaal
+motorBackward(int speed1, int speed2){
+	PORTB |= (1<<PORTB0); // PortB bit 0 aanzetten
+ 152:	95 b1       	in	r25, 0x05	; 5
+ 154:	91 60       	ori	r25, 0x01	; 1
+ 156:	95 b9       	out	0x05, r25	; 5
+	PORTD |= (1<<PORTD7); // PortB bit 7 aanzetten
+ 158:	9b b1       	in	r25, 0x0b	; 11
+ 15a:	90 68       	ori	r25, 0x80	; 128
+ 15c:	9b b9       	out	0x0b, r25	; 11
+	OCR0A = 255 - speed1;
+ 15e:	80 95       	com	r24
+ 160:	87 bd       	out	0x27, r24	; 39
+	OCR0B = 255 - speed2;
+ 162:	60 95       	com	r22
+ 164:	68 bd       	out	0x28, r22	; 40
+}
+ 166:	08 95       	ret
+
+00000168 <tankTurnLeft>:
 
 // Tank draai functie voor snellheid aanpassen integers van 0 -> 255 maximaal
 tankTurnLeft(int speed1, int speed2){
 	PORTB &= ~(1<<PORTB0);
-  c2:	95 b1       	in	r25, 0x05	; 5
-  c4:	9e 7f       	andi	r25, 0xFE	; 254
-  c6:	95 b9       	out	0x05, r25	; 5
+ 168:	95 b1       	in	r25, 0x05	; 5
+ 16a:	9e 7f       	andi	r25, 0xFE	; 254
+ 16c:	95 b9       	out	0x05, r25	; 5
 	PORTD |= (1<<PORTD7);
-  c8:	9b b1       	in	r25, 0x0b	; 11
-  ca:	90 68       	ori	r25, 0x80	; 128
-  cc:	9b b9       	out	0x0b, r25	; 11
+ 16e:	9b b1       	in	r25, 0x0b	; 11
+ 170:	90 68       	ori	r25, 0x80	; 128
+ 172:	9b b9       	out	0x0b, r25	; 11
 	OCR0A = 255 - speed1;
-  ce:	80 95       	com	r24
-  d0:	87 bd       	out	0x27, r24	; 39
+ 174:	80 95       	com	r24
+ 176:	87 bd       	out	0x27, r24	; 39
 	OCR0B = speed2;
-  d2:	68 bd       	out	0x28, r22	; 40
+ 178:	68 bd       	out	0x28, r22	; 40
 }
-  d4:	08 95       	ret
+ 17a:	08 95       	ret
 
-000000d6 <tankTurnRight>:
+0000017c <tankTurnRight>:
 // Tank draai functie voor snellheid aanpassen integers van 0 -> 255 maximaal
 tankTurnRight(int speed1, int speed2){
 	PORTB |= (1<<PORTB0);
-  d6:	95 b1       	in	r25, 0x05	; 5
-  d8:	91 60       	ori	r25, 0x01	; 1
-  da:	95 b9       	out	0x05, r25	; 5
+ 17c:	95 b1       	in	r25, 0x05	; 5
+ 17e:	91 60       	ori	r25, 0x01	; 1
+ 180:	95 b9       	out	0x05, r25	; 5
 	PORTD &= ~(1<<PORTD7);
-  dc:	9b b1       	in	r25, 0x0b	; 11
-  de:	9f 77       	andi	r25, 0x7F	; 127
-  e0:	9b b9       	out	0x0b, r25	; 11
+ 182:	9b b1       	in	r25, 0x0b	; 11
+ 184:	9f 77       	andi	r25, 0x7F	; 127
+ 186:	9b b9       	out	0x0b, r25	; 11
 	OCR0A = speed1;
-  e2:	87 bd       	out	0x27, r24	; 39
+ 188:	87 bd       	out	0x27, r24	; 39
 	OCR0B = 255 - speed2;
-  e4:	60 95       	com	r22
-  e6:	68 bd       	out	0x28, r22	; 40
+ 18a:	60 95       	com	r22
+ 18c:	68 bd       	out	0x28, r22	; 40
 }
-  e8:	08 95       	ret
+ 18e:	08 95       	ret
 
-000000ea <_exit>:
-  ea:	f8 94       	cli
+00000190 <_exit>:
+ 190:	f8 94       	cli
 
-000000ec <__stop_program>:
-  ec:	ff cf       	rjmp	.-2      	; 0xec <__stop_program>
+00000192 <__stop_program>:
+ 192:	ff cf       	rjmp	.-2      	; 0x192 <__stop_program>
