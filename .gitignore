@@ -9,3 +9,10 @@
 *.lss
 *.map
 *.srec
+*.o
+*.o
+*.elf
+*.hex
+*.lss
+*.map
+*.srec

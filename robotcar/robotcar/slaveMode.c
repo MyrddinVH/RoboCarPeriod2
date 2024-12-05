@@ -9,6 +9,8 @@
 #include <util/delay.h>
 #include <stdbool.h>
 
+volatile uint8_t speed = 100;
+
 void slaveMode(){
 	//PB3 = right
 	//PB4 = middle
@@ -20,7 +22,7 @@ void slaveMode(){
 	int slaveMaskForward = 0b00101000;
 	int slaveMaskLeft = 0b00011000;
 	int slaveMaskRight = 0b00110000;
-	int speed = 100;
+
 	
 	if((PINB & slaveMaskForward) == 0x28){
 		forward = true;
