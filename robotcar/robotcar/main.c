@@ -23,10 +23,6 @@ int main(void){
 	DDRC |= (1<<DDC0) | (1<<DDC3);
 	DDRB |= (1<<DDB0) | (1<<DDB1) | (1<<DDB2);
 	
-	PORTC |= (1<<PORTC3);
-	_delay_ms(500);
-	PORTC &= ~(1<<PORTC3);
-	
 	// PWM setup
 	TCCR1A |= (1<<WGM11);
 	TCCR1B |= (1<<WGM13) | (1<<WGM12) | (1<<CS11) | (1<<CS10);

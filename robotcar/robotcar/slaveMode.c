@@ -20,6 +20,7 @@ void slaveMode(){
 	int slaveMaskForward = 0b00101000;
 	int slaveMaskLeft = 0b00011000;
 	int slaveMaskRight = 0b00110000;
+	int speed = 100;
 	
 	if((PINB & slaveMaskForward) == 0x28){
 		forward = true;
@@ -40,14 +41,14 @@ void slaveMode(){
 	}
 	
 	if(forward){
-		motorForward(20);
+		motorForward(speed);
 	}
 	
 	if(left){
-		tankTurnLeft(20);
+		tankTurnLeft(speed);
 	}
 	
 	if(right){
-		tankTurnRight(20);
+		tankTurnRight(speed);
 	}
 }
