@@ -12,38 +12,38 @@
 volatile uint8_t speed = 100;
 
 void slaveMode(){
-	//PB3 = right
-	//PB4 = middle
-	//PB5 = left
+	//PC0 = left
+	//PC1 = right
+	//PC2 = middle
 	
 	_Bool forward;
 	_Bool left;
 	_Bool right;
-	int slaveMaskForward = 0b00101000;
-	int slaveMaskLeft = 0b00011000;
-	int slaveMaskRight = 0b00110000;
+	int slaveMaskForward = 0b00000100;
+	int slaveMaskLeft = 0b00000001;
+	int slaveMaskRight = 0b00000010;
 
 	
-	if((PINB & slaveMaskForward) == 0x28){
+	if((PINC & slaveMaskForward) == 4){
 		forward = true;
 		left = false;
 		right = false;
 	}
 	
-	if((PINB & slaveMaskLeft) == 0x18){
+	if((PINC & slaveMaskLeft) == 1){
 		forward = false;
 		left = true;
 		right = false;
 	}
 	
-	if((PINB & slaveMaskRight) == 0x30){
+	if((PINC & slaveMaskRight) == 2){
 		forward = false;
 		left = false;
 		right = true;
 	}
 	
 	if(forward){
-		motorForward(speed);
+		motorForward(speed, speed);
 	}
 	
 	if(left){
