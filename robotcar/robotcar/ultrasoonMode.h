@@ -9,7 +9,7 @@
 #ifndef ULTRASOONMODE_H_
 #define ULTRASOONMODE_H_
 
-
+void ultrasoonMode();
 
 
 

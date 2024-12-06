@@ -8,6 +8,9 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdbool.h>
+#include "motorControl.h"
+
+volatile uint8_t speedSlave = 40;
 
 void slaveMode(){
 	//PB3 = right
@@ -40,14 +43,14 @@ void slaveMode(){
 	}
 	
 	if(forward){
-		motorForward(20);
+		motorForward(speedSlave,speedSlave);
 	}
 	
 	if(left){
-		tankTurnLeft(20);
+		tankTurnLeft(speedSlave);
 	}
 	
 	if(right){
-		tankTurnRight(20);
+		tankTurnRight(speedSlave);
 	}
 }

@@ -8,6 +8,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdbool.h>
+#include <avr/interrupt.h>
 #include "LCD.h"
 #include "motorControl.h"
 #include "remoteControl.h"
@@ -23,7 +24,11 @@ int main(void){
 	DDRC |= (1<<DDC0);
 	DDRB |= (1<<DDB0) | (1<<DDB1) | (1<<DDB2);
 	
-
+	// interupt mode switch setup
+	PCICR |= (1<<PCIE0);
+	PCIFR |= (1<<PCIF0);
+	PCMSK0 |= (1<<PCINT7);
+	sei();
 	
 	// PWM setup
 	TCCR1A |= (1<<WGM11);
@@ -35,8 +40,7 @@ int main(void){
 			
 
     while (1){
-		//slaveMode();
-		motorForward(200);
+		modeChecker();
     }
 }
 
