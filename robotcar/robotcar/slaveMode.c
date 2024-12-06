@@ -10,39 +10,51 @@
 #include <stdbool.h>
 #include "motorControl.h"
 
+<<<<<<< HEAD
 volatile uint8_t speedSlave = 40;
+=======
+volatile uint8_t speed = 40;
+>>>>>>> slaveMode
 
 void slaveMode(){
-	//PB3 = right
-	//PB4 = middle
-	//PB5 = left
+	//PC0 = left
+	//PC1 = right
+	//PC2 = middle
 	
 	_Bool forward;
-	_Bool left;
-	_Bool right;
-	int slaveMaskForward = 0b00101000;
-	int slaveMaskLeft = 0b00011000;
-	int slaveMaskRight = 0b00110000;
+	_Bool left;					//MRL
+	_Bool right;		 //PC76543210
+	int slaveMaskForward = 0b00000011;
+	int slaveMaskLeft 	 = 0b00000110;
+	int slaveMaskRight   = 0b00000101;
+
 	
-	if((PINB & slaveMaskForward) == 0x28){
+	if((PINC & slaveMaskForward) == 3){
 		forward = true;
 		left = false;
 		right = false;
 	}
 	
-	if((PINB & slaveMaskLeft) == 0x18){
+	if((PINC & slaveMaskLeft) == 6){
 		forward = false;
 		left = true;
 		right = false;
 	}
 	
-	if((PINB & slaveMaskRight) == 0x30){
+	if((PINC & slaveMaskRight) == 5){
 		forward = false;
 		left = false;
 		right = true;
 	}
 	
+	if((PINC & 0b00000111) == 7){
+		forward = true;
+		left = false;
+		right = false;
+	}
+	
 	if(forward){
+<<<<<<< HEAD
 		motorForward(speedSlave,speedSlave);
 	}
 	
@@ -52,5 +64,16 @@ void slaveMode(){
 	
 	if(right){
 		tankTurnRight(speedSlave);
+=======
+		motorForward(speed,speed);
+	}
+	
+	if(left){
+		tankTurnRight(speed);
+	}
+	
+	if(right){
+		tankTurnRight(speed);
+>>>>>>> slaveMode
 	}
 }
