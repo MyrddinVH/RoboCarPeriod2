@@ -16,3 +16,10 @@
 *.lss
 *.map
 *.srec
+*.o
+*.d
+*.srec
+*.map
+*.lss
+*.hex
+*.elf
