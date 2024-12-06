@@ -4,6 +4,8 @@
 
 LCD.c
 
+lcd.i2cmaster.c
+
 main.c
 
 modeSwitch.c
@@ -15,6 +17,8 @@ remoteControl.c
 slaveMode.c
 
 timeSaving.c
+
+twimaster.c
 
 ultrasoonMode.c
 

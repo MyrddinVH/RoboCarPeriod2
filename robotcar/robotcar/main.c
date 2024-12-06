@@ -16,7 +16,6 @@
 #include "timeSaving.h"
 #include "modeSwitch.h"
 
-
 int main(void){
 
     DDRD |= (1<<DDD5) | (1<<DDD7);
@@ -35,11 +34,21 @@ int main(void){
 	// Initial speed set
 	OCR0A = 0;
 	OCR0B = 0;
-			
+	
+    lcd_init(LCD_ON_DISPLAY);
+    lcd_backlight(0);
+    _delay_ms(500);
+    lcd_backlight(1);
+    _delay_ms(500);		
 
     while (1){
 		slaveMode();
-		
+        lcd_clrscr();
+        lcd_gotoxy(0, 0);
+        lcd_puts_P(snaak);
+        lcd_gotoxy(1, 1);
+        lcd_puts("test");
+        _delay_ms(1000);		
     }
 }
 
