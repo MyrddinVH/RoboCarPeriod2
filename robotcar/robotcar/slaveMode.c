@@ -10,11 +10,7 @@
 #include <stdbool.h>
 #include "motorControl.h"
 
-<<<<<<< HEAD
 volatile uint8_t speedSlave = 40;
-=======
-volatile uint8_t speed = 40;
->>>>>>> slaveMode
 
 void slaveMode(){
 	//PC0 = left
@@ -54,7 +50,6 @@ void slaveMode(){
 	}
 	
 	if(forward){
-<<<<<<< HEAD
 		motorForward(speedSlave,speedSlave);
 	}
 	
@@ -64,16 +59,5 @@ void slaveMode(){
 	
 	if(right){
 		tankTurnRight(speedSlave);
-=======
-		motorForward(speed,speed);
-	}
-	
-	if(left){
-		tankTurnRight(speed);
-	}
-	
-	if(right){
-		tankTurnRight(speed);
->>>>>>> slaveMode
 	}
 }
