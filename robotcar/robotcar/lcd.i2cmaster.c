@@ -132,3 +132,8 @@ void lcd_backlight(char on)
     wr_lcd_mode(on, 8);
 }
 
+variableLCD(int N){
+	 char str [20];
+	    sprintf(str, "%d", N);
+		lcd_puts(str);
+}

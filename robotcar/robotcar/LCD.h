@@ -202,6 +202,7 @@ extern void lcd_clrscr(void);
 */
 extern void lcd_home(void);
 
+void variableLCD(int N);
 
 /**
  @brief    Set cursor to specified position

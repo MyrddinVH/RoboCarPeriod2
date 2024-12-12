@@ -42,13 +42,15 @@ int main(void){
     _delay_ms(500);		
 
     while (1){
-		slaveMode();
+		int test = 200;
         lcd_clrscr();
         lcd_gotoxy(0, 0);
-        lcd_puts_P(snaak);
+		variableLCD(test);
         lcd_gotoxy(1, 1);
         lcd_puts("test");
         _delay_ms(1000);		
     }
 }
+
+
 
