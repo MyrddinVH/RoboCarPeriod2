@@ -9,7 +9,7 @@
 #ifndef REMOTECONTROL_H_
 #define REMOTECONTROL_H_
 
-
+void remoteControl();
 
 
 
