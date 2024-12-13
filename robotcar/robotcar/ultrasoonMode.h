@@ -10,7 +10,7 @@
 #define ULTRASOONMODE_H_
 
 
-
+void UltrasoonLoop();
 
 
 #endif /* ULTRASOONMODE_H_ */
