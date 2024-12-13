@@ -10,7 +10,7 @@
 #include <stdbool.h>
 #include "motorControl.h"
 
-volatile uint8_t speed = 100;
+volatile uint8_t speed = 40;
 
 void slaveMode(){
 	//PC0 = left
@@ -18,37 +18,43 @@ void slaveMode(){
 	//PC2 = middle
 	
 	_Bool forward;
-	_Bool left;
-	_Bool right;
-	int slaveMaskForward = 0b00000100;
-	int slaveMaskLeft = 0b00000001;
-	int slaveMaskRight = 0b00000010;
+	_Bool left;					//MRL
+	_Bool right;		 //PC76543210
+	int slaveMaskForward = 0b00000011;
+	int slaveMaskLeft 	 = 0b00000110;
+	int slaveMaskRight   = 0b00000101;
 
 	
-	if((PINC & slaveMaskForward) == 4){
+	if((PINC & slaveMaskForward) == 3){
 		forward = true;
 		left = false;
 		right = false;
 	}
 	
-	if((PINC & slaveMaskLeft) == 1){
+	if((PINC & slaveMaskLeft) == 6){
 		forward = false;
 		left = true;
 		right = false;
 	}
 	
-	if((PINC & slaveMaskRight) == 2){
+	if((PINC & slaveMaskRight) == 5){
 		forward = false;
 		left = false;
 		right = true;
 	}
 	
+	if((PINC & 0b00000111) == 7){
+		forward = true;
+		left = false;
+		right = false;
+	}
+	
 	if(forward){
-		motorForward(speed, speed);
+		motorForward(speed,speed);
 	}
 	
 	if(left){
-		tankTurnLeft(speed);
+		tankTurnRight(speed);
 	}
 	
 	if(right){
