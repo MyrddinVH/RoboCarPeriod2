@@ -38,12 +38,14 @@ SUBDIRS :=
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../LCD.c \
+../lcd.i2cmaster.c \
 ../main.c \
 ../modeSwitch.c \
 ../motorControl.c \
 ../remoteControl.c \
 ../slaveMode.c \
 ../timeSaving.c \
+../twimaster.c \
 ../ultrasoonMode.c
 
 
@@ -55,42 +57,50 @@ ASM_SRCS +=
 
 OBJS +=  \
 LCD.o \
+lcd.i2cmaster.o \
 main.o \
 modeSwitch.o \
 motorControl.o \
 remoteControl.o \
 slaveMode.o \
 timeSaving.o \
+twimaster.o \
 ultrasoonMode.o
 
 OBJS_AS_ARGS +=  \
 LCD.o \
+lcd.i2cmaster.o \
 main.o \
 modeSwitch.o \
 motorControl.o \
 remoteControl.o \
 slaveMode.o \
 timeSaving.o \
+twimaster.o \
 ultrasoonMode.o
 
 C_DEPS +=  \
 LCD.d \
+lcd.i2cmaster.d \
 main.d \
 modeSwitch.d \
 motorControl.d \
 remoteControl.d \
 slaveMode.d \
 timeSaving.d \
+twimaster.d \
 ultrasoonMode.d
 
 C_DEPS_AS_ARGS +=  \
 LCD.d \
+lcd.i2cmaster.d \
 main.d \
 modeSwitch.d \
 motorControl.d \
 remoteControl.d \
 slaveMode.d \
 timeSaving.d \
+twimaster.d \
 ultrasoonMode.d
 
 OUTPUT_FILE_PATH +=robotcar.elf
@@ -108,6 +118,13 @@ LINKER_SCRIPT_DEP+=
 
 # AVR32/GNU C Compiler
 ./LCD.o: .././LCD.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega328p" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+./lcd.i2cmaster.o: .././lcd.i2cmaster.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega328p" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
@@ -150,6 +167,13 @@ LINKER_SCRIPT_DEP+=
 	
 
 ./timeSaving.o: .././timeSaving.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega328p" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+./twimaster.o: .././twimaster.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega328p" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

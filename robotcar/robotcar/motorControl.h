@@ -11,7 +11,7 @@
 
 void motorForward(int speed1, int speed2);
 void motorBackward(int speed1, int speed2);
-void tankTurnLeft(int speed1, int speed2);
-void tankTurnRight(int speed1, int speed2);
+void tankTurnLeft(int speed);
+void tankTurnRight(int speed);
 
 #endif /* MOTORCONTROL_H_ */
