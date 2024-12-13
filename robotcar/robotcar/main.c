@@ -26,15 +26,14 @@ int main(void){
 
 	DDRB |= (1<<DDB0) | (1<<DDB1) | (1<<DDB2);
 	
-<<<<<<< HEAD
+
 	// interupt mode switch setup
 	PCICR |= (1<<PCIE0);
 	PCIFR |= (1<<PCIF0);
 	PCMSK0 |= (1<<PCINT7);
 	sei();
 	
-=======
->>>>>>> slaveMode
+
 	// PWM setup
 	TCCR0A |= (1<<WGM00);
 	TCCR0B |= (1<<CS02) | (1<<CS00);
@@ -48,12 +47,10 @@ int main(void){
 			
 
     while (1){
-<<<<<<< HEAD
+
 		modeChecker();
-=======
+
 		slaveMode();
-		
->>>>>>> slaveMode
     }
 }
 
