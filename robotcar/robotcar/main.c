@@ -17,10 +17,15 @@
 #include "timeSaving.h"
 #include "modeSwitch.h"
 
+volatile _Bool modeSwitch = false;
+
+ISR(PCINT1_vect){
+	if((PINC & (1<<PINC3)) == 0){
+		modeSwitch = true;
+	}
+}
 
 int main(void){
-
-    DDRD |= (1<<DDD5) | (1<<DDD7);
 
     DDRD |= (1<<DDD5) | (1<<DDD7) | (1<<DDD6);
 
@@ -29,9 +34,14 @@ int main(void){
 	// PWM setup
 	TCCR0A |= (1<<WGM00);
 	TCCR0B |= (1<<CS02) | (1<<CS00);
+	
 	// Set Compare Output Mode for both channels A and B
-
 	TCCR0A |= (1<<COM0A1)  | (1<<COM0B1) ;
+	
+	// mode switch interupt setup
+	PCMSK1 |= (1<<PCINT11);
+	PCICR |= (1<<PCIE1);
+	sei();
 
 	// Initial speed set
 	OCR0A = 0;
@@ -39,7 +49,13 @@ int main(void){
 			
 
     while (1){
-		slaveMode();
+		if(modeSwitch){
+			modeSwitcher();
+			modeSwitch = false;
+		}
+		
+		//modeChecker();
+		motorForward(100,100);
 		
     }
 }

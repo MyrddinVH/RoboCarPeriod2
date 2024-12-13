@@ -134,7 +134,16 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="i2cmaster.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="LCD.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lcd.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lcd.i2cmaster.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
@@ -156,6 +165,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="timeSaving.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="twimaster.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="ultrasoonMode.c">

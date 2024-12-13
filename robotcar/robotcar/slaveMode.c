@@ -18,7 +18,7 @@ void slaveMode(){
 	//PC2 = middle
 	
 	_Bool forward;
-	_Bool left;					//MRL
+	_Bool left;			 //		  MRL
 	_Bool right;		 //PC76543210
 	int slaveMaskForward = 0b00000011;
 	int slaveMaskLeft 	 = 0b00000110;
@@ -41,12 +41,6 @@ void slaveMode(){
 		forward = false;
 		left = false;
 		right = true;
-	}
-	
-	if((PINC & 0b00000111) == 7){
-		forward = true;
-		left = false;
-		right = false;
 	}
 	
 	if(forward){
