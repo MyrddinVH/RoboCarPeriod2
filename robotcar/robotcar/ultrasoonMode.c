@@ -5,5 +5,10 @@
  *  Author: Huub Bouwman, Myrddin van Hallem, Tim de Kuijper and Paul Nguyen
  */ 
 
+#include <avr/io.h>
+#include "motorControl.h"
 
-//testing
+
+void ultrasoonMode(){
+	motorForward(100,100);
+}

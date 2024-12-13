@@ -12,20 +12,11 @@
 #include "ultrasoonMode.h"
 #include "remoteControl.h"
 
-enum modeNames { REMOTE,
-				 SLAVE,
-				 AUTO  };
+enum modeNames {REMOTE,SLAVE,AUTO};
 volatile uint8_t mode = REMOTE;
 
-ISR(PCINT0_vect){
-	if((PINB & (1<<PINB7)) == 0){
-		modeSwitcher();
-	}
-}
-
-
 void modeSwitcher(){
-	switch (mode){
+		switch (mode){
 		case REMOTE:
 			mode = SLAVE;
 			break;
@@ -33,6 +24,9 @@ void modeSwitcher(){
 			mode = AUTO;
 			break;
 		case AUTO:
+			mode = REMOTE;
+			break;
+		default:
 			mode = REMOTE;
 			break;
 	}
@@ -45,5 +39,6 @@ void modeChecker(){
 		slaveMode();
 	}else if(mode == AUTO){
 		ultrasoonMode();
+	
 	}
 }
