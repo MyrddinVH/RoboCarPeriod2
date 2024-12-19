@@ -9,7 +9,8 @@
 #ifndef MODESWITCH_H_
 #define MODESWITCH_H_
 
-
+void modeSwitcher();
+void modeChecker();
 
 
 
