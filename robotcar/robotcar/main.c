@@ -21,7 +21,7 @@ volatile _Bool modeSwitch = false;
 
 ISR(PCINT1_vect){
 	if((PINC & (1<<PINC4)) == 0){
-		motorForward(255,255);
+		modeSwitch = true;
 	}
 }
 
@@ -51,12 +51,12 @@ int main(void){
 			
 
     while (1){
-// 		if(modeSwitch){
-// 			modeSwitcher();
-// 			modeSwitch = false;
-// 		}
-// 		
-// 		modeChecker();		
+		if(modeSwitch){
+			modeSwitcher();
+			modeSwitch = false;
+		}
+		
+		modeChecker();		
     }
 }
 

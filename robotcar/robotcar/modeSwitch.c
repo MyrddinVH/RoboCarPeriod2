@@ -30,15 +30,11 @@ void modeSwitcher(void){
 }
 
 void modeChecker(void){
-	switch(mode){
-		case REMOTE:
-			remoteControl();
-			break;
-		case SLAVE:
-			slaveMode();
-			break;
-		case AUTO:
-			ultrasoonMode();
-			break;
+	if(mode == REMOTE){
+		remoteControl();
+	}else if(mode == SLAVE){
+		slaveMode();
+	}else if(mode == AUTO){
+		ultrasoonMode();
 	}
 }
