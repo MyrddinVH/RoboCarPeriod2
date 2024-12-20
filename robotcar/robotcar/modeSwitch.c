@@ -15,7 +15,7 @@
 enum modeNames {REMOTE,SLAVE,AUTO};
 volatile uint8_t mode = REMOTE;
 
-void modeSwitcher(){
+void modeSwitcher(void){
 		switch (mode){
 		case REMOTE:
 			mode = SLAVE;
@@ -32,13 +32,19 @@ void modeSwitcher(){
 	}
 }
 
-void modeChecker(){
-	if(mode == REMOTE){
-		remoteControl();
-	}else if(mode == SLAVE){
-		slaveMode();
-	}else if(mode == AUTO){
-		ultrasoonMode();
-	
+void modeChecker(void){
+	switch(mode){
+		case REMOTE:
+			remoteControl();
+			break;
+		case SLAVE:
+			slaveMode();
+			break;
+		case AUTO:
+			ultrasoonMode();
+			break;
+		default:
+			remoteControl();
+			break;
 	}
 }
