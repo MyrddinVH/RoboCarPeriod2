@@ -20,8 +20,8 @@
 volatile _Bool modeSwitch = false;
 
 ISR(PCINT1_vect){
-	if((PINC & (1<<PINC3)) == 0){
-		modeSwitch = true;
+	if((PINC & (1<<PINC4)) == 0){
+		motorForward(255,255);
 	}
 }
 
@@ -31,6 +31,8 @@ int main(void){
 
 	DDRB |= (1<<DDB0) | (1<<DDB1) | (1<<DDB2);
 	
+	PORTC |= (1<<PORTC4);
+	
 	// PWM setup
 	TCCR0A |= (1<<WGM00);
 	TCCR0B |= (1<<CS02) | (1<<CS00);
@@ -39,7 +41,7 @@ int main(void){
 	TCCR0A |= (1<<COM0A1)  | (1<<COM0B1) ;
 	
 	// mode switch interupt setup
-	PCMSK1 |= (1<<PCINT11);
+	PCMSK1 |= (1<<PCINT12);
 	PCICR |= (1<<PCIE1);
 	sei();
 
@@ -49,14 +51,12 @@ int main(void){
 			
 
     while (1){
-		if(modeSwitch){
-			modeSwitcher();
-			modeSwitch = false;
-		}
-		
-		//modeChecker();
-		motorForward(100,100);
-		
+// 		if(modeSwitch){
+// 			modeSwitcher();
+// 			modeSwitch = false;
+// 		}
+// 		
+// 		modeChecker();		
     }
 }
 

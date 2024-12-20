@@ -26,9 +26,6 @@ void modeSwitcher(void){
 		case AUTO:
 			mode = REMOTE;
 			break;
-		default:
-			mode = REMOTE;
-			break;
 	}
 }
 
@@ -42,9 +39,6 @@ void modeChecker(void){
 			break;
 		case AUTO:
 			ultrasoonMode();
-			break;
-		default:
-			remoteControl();
 			break;
 	}
 }

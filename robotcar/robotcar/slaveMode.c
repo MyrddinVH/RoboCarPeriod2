@@ -11,19 +11,17 @@
 #include "motorControl.h"
 
 volatile uint8_t slaveSpeed = 40;
+volatile _Bool forward;
+volatile _Bool left;			 //    MRL
+volatile _Bool right;		  //PC76543210
+volatile int slaveMaskForward = 0b00000011;
+volatile int slaveMaskLeft 	  = 0b00000110;
+volatile int slaveMaskRight   = 0b00000101;
 
-void slaveMode(){
+void slaveMode(void){
 	//PC0 = left
 	//PC1 = right
 	//PC2 = middle
-	
-	_Bool forward;
-	_Bool left;			 //		  MRL
-	_Bool right;		 //PC76543210
-	int slaveMaskForward = 0b00000011;
-	int slaveMaskLeft 	 = 0b00000110;
-	int slaveMaskRight   = 0b00000101;
-
 	
 	if((PINC & slaveMaskForward) == 3){
 		forward = true;
