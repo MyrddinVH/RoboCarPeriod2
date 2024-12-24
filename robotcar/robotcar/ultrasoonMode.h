@@ -9,8 +9,15 @@
 #ifndef ULTRASOONMODE_H_
 #define ULTRASOONMODE_H_
 
+// #include "millis.h"
 
 void UltrasoonLoop();
-
+void initHCSR04();
+void sendPulse();
+uint32_t millis(void);
+void millis_init(void);
+void checkForObject();
+void runUltrasoon();
+void driver2();
 
 #endif /* ULTRASOONMODE_H_ */

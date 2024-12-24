@@ -44,6 +44,6 @@ void modeChecker(){
 	}else if(mode == SLAVE){
 		slaveMode();
 	}else if(mode == AUTO){
-		ultrasoonMode();
+// 		ultrasoonMode();
 	}
 }

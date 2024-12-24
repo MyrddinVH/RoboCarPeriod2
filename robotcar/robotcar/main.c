@@ -16,6 +16,7 @@
 #include "ultrasoonMode.h"
 #include "timeSaving.h"
 #include "modeSwitch.h"
+#include "millis.h"
 
 
 int main(void){
@@ -44,13 +45,19 @@ int main(void){
 	// Initial speed set
 	OCR0A = 0;
 	OCR0B = 0;
+	
+	usart0_init();
+	initHCSR04();
+	millis_init();
 			
 
     while (1){
 
-		modeChecker();
+// 		modeChecker();
 
-		slaveMode();
+// 		slaveMode();
+
+		runUltrasoon();
     }
 }
 
