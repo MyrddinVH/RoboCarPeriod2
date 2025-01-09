@@ -15,9 +15,9 @@
 #include <time.h> 
 #include <avr/interrupt.h>
 
-#define STOP_DISTANCE 100
-#define TURN_TIME 750
-#define TIME_OUT_IN_US 10000
+#define STOP_DISTANCE 150
+#define TURN_TIME 500
+#define TIME_OUT_IN_US 8000
 #define SPEED_ULTRASOON 70
 
 enum driveDirection{forward, turnLeft, turnRight};
