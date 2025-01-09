@@ -17,6 +17,7 @@
 
 #define STOP_DISTANCE 100
 #define TURN_TIME 750
+#define TIME_OUT_IN_US 10000
 #define SPEED_ULTRASOON 70
 
 enum driveDirection{forward, turnLeft, turnRight};
@@ -70,7 +71,7 @@ void sendPulse(){
 	
 		switch(sensorToRead){
 			case 1:
-			distancePB1 = pulseIn(&PINB, PORTB1, 1, 30000);
+			distancePB1 = pulseIn(&PINB, PORTB1, 1, TIME_OUT_IN_US);
 			distancePB1 = distancePB1 / 10;
 			char temp[50];
 // 			sprintf(temp, "%d", distancePB1);
@@ -81,7 +82,7 @@ void sendPulse(){
 			sensorToRead = 2;
 			break;
 			case 2:
-			distancePB2 = pulseIn(&PINB, PORTB2, 1, 30000);
+			distancePB2 = pulseIn(&PINB, PORTB2, 1, TIME_OUT_IN_US);
 			distancePB2 = distancePB2 / 10;
 // 			sprintf(temp, "%d", distancePB2);
 // 			usart0_transmitStr("sensor on pb2");
@@ -207,13 +208,13 @@ void driver(){
 	// Execute motion based on directionToDrive
 	switch (directionToDrive) {
 		case forward:
-		motorForward(100, 100);
+		motorForward(SPEED_ULTRASOON, SPEED_ULTRASOON);
 		break;
 		case turnLeft:
-		tankTurnLeft(100);
+		tankTurnLeft(SPEED_ULTRASOON);
 		break;
 		case turnRight:
-		tankTurnRight(100);
+		tankTurnRight(SPEED_ULTRASOON);
 		break;
 		default:
 		break;
