@@ -19,8 +19,8 @@
 
 volatile _Bool modeSwitch = false;
 
-ISR(PCINT1_vect){
-	if((PINC & (1<<PINC4)) == 0){
+ISR(PCINT0_vect){
+	if((PINB & (1<<PINB4)) == 0){
 		modeSwitch = true;
 	}
 }
@@ -30,8 +30,11 @@ int main(void){
     DDRD |= (1<<DDD5) | (1<<DDD7) | (1<<DDD6);
 
 	DDRB |= (1<<DDB0) | (1<<DDB1) | (1<<DDB2);
+	DDRB &= ~(1<<DDB4);
 	
-	PORTC |= (1<<PORTC4);
+	DDRC &= ~((1<<DDC0) | (1<<DDC1) | (1<<DDC2));
+	
+	PORTB |= (1<<PORTB4);
 	
 	// PWM setup
 	TCCR0A |= (1<<WGM00);
@@ -41,8 +44,8 @@ int main(void){
 	TCCR0A |= (1<<COM0A1)  | (1<<COM0B1) ;
 	
 	// mode switch interupt setup
-	PCMSK1 |= (1<<PCINT12);
-	PCICR |= (1<<PCIE1);
+	PCMSK0 |= (1<<PCINT4);
+	PCICR |= (1<<PCIE0);
 	sei();
 
 	// Initial speed set
@@ -50,12 +53,12 @@ int main(void){
 	OCR0B = 0;
 	
 
-			
-
-    while (1){
     lcd_init(LCD_ON_DISPLAY);
-    lcd_backlight(1);		
-		lcd_clrscr();		
+    lcd_backlight(1);	
+	lcd_gotoxy(5,0);
+	usart0_transmitStr("remote");
+	lcd_puts("REMOTE");		
+    while (1){
 		if(modeSwitch){
 			modeSwitcher();
 			modeSwitch = false;
