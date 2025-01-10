@@ -1,9 +1,9 @@
 /*
- * modeSwitch.c
- *
- * Created: 29-11-2024 10:15:01
- *  Author: Huub Bouwman, Myrddin van Hallem, Tim de Kuijper and Paul Nguyen
- */ 
+* modeSwitch.c
+*
+* Created: 29-11-2024 10:15:01
+*  Author: Huub Bouwman, Myrddin van Hallem, Tim de Kuijper and Paul Nguyen
+*/
 #define F_CPU 16000000UL
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -11,57 +11,44 @@
 #include "slaveMode.h"
 #include "ultrasoonMode.h"
 #include "remoteControl.h"
+#include "Debugger.h"
 
 enum modeNames {REMOTE,SLAVE,AUTO};
 volatile uint8_t mode = REMOTE;
 int previousmode = 0;
 
 void modeSwitcher(void){
-		switch (mode){
+	switch (mode){
 		case REMOTE:
-			mode = SLAVE;
-			break;
+		mode = SLAVE;
+		lcd_clrscr();
+		lcd_gotoxy(5,0);
+		usart0_transmitStr("remote");
+		lcd_puts("REMOTE");
+		break;
 		case SLAVE:
-			mode = AUTO;
-			break;
+		mode = AUTO;
+		lcd_clrscr();
+		lcd_gotoxy(5,0);
+		usart0_transmitStr("slave");
+		lcd_puts("SLAVE");
+		break;
 		case AUTO:
-			mode = REMOTE;
-			break;
+		mode = REMOTE;
+		lcd_clrscr();
+		lcd_gotoxy(5,0);
+		usart0_transmitStr("auto");
+		lcd_puts("AUTO");
+		break;
 	}
 }
 
 void modeChecker(void){
 	if(mode == REMOTE){
 		remoteControl();
-		LCDmode();
 	}else if(mode == SLAVE){
 		slaveMode();
-		LCDmode();		
 	}else if(mode == AUTO){
-// 		ultrasoonMode();
-		LCDmode();
-	}
-}
-
-void LCDmode(void){
-	if (previousmode != mode){
-		switch (mode){
-			case REMOTE:
-			lcd_clrscr();
-			lcd_gotoxy(5,0);
-			lcd_puts("REMOTE");
-			break;
-			case SLAVE:
-			lcd_clrscr();
-			lcd_gotoxy(5,0);
-			lcd_puts("SLAVE");			
-			break;
-			case AUTO:
-			lcd_clrscr();
-			lcd_gotoxy(5,0);
-			lcd_puts("AUTO");			
-			break;
-		}
-		previousmode = mode;			
+		runUltrasoon();
 	}
 }
