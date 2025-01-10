@@ -211,10 +211,10 @@ void driver(){
 		motorForward(SPEED_ULTRASOON, SPEED_ULTRASOON);
 		break;
 		case turnLeft:
-		tankTurnLeft(SPEED_ULTRASOON);
+		tankTurnLeft(SPEED_ULTRASOON / 2);
 		break;
 		case turnRight:
-		tankTurnRight(SPEED_ULTRASOON);
+		tankTurnRight(SPEED_ULTRASOON / 2);
 		break;
 		default:
 		break;
