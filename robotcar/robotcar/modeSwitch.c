@@ -14,6 +14,7 @@
 
 enum modeNames {REMOTE,SLAVE,AUTO};
 volatile uint8_t mode = REMOTE;
+int previousmode = 0;
 
 void modeSwitcher(void){
 		switch (mode){
@@ -32,18 +33,35 @@ void modeSwitcher(void){
 void modeChecker(void){
 	if(mode == REMOTE){
 		remoteControl();
-		lcd_clrscr();
-		lcd_gotoxy(5,0);
-		lcd_puts("REMOTE");
+		LCDmode();
 	}else if(mode == SLAVE){
 		slaveMode();
-		lcd_clrscr();
-		lcd_gotoxy(5,0);
-		lcd_puts("SLAVE");		
+		LCDmode();		
 	}else if(mode == AUTO){
 // 		ultrasoonMode();
-		lcd_clrscr();
-		lcd_gotoxy(5,0);
-		lcd_puts("AUTO");
+		LCDmode();
+	}
+}
+
+void LCDmode(void){
+	if (previousmode != mode){
+		switch (mode){
+			case REMOTE:
+			lcd_clrscr();
+			lcd_gotoxy(5,0);
+			lcd_puts("REMOTE");
+			break;
+			case SLAVE:
+			lcd_clrscr();
+			lcd_gotoxy(5,0);
+			lcd_puts("SLAVE");			
+			break;
+			case AUTO:
+			lcd_clrscr();
+			lcd_gotoxy(5,0);
+			lcd_puts("AUTO");			
+			break;
+		}
+		previousmode = mode;			
 	}
 }

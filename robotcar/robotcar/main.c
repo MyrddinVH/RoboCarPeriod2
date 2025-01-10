@@ -50,12 +50,9 @@ int main(void){
 	OCR0B = 0;
 	
 
-			
-
-    while (1){
     lcd_init(LCD_ON_DISPLAY);
-    lcd_backlight(1);		
-		lcd_clrscr();		
+    lcd_backlight(1);			
+    while (1){
 		if(modeSwitch){
 			modeSwitcher();
 			modeSwitch = false;
