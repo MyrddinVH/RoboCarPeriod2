@@ -19,37 +19,35 @@ volatile int slaveMaskLeft 	  = 0b00000110;
 volatile int slaveMaskRight   = 0b00000101;
 
 void slaveMode(void){
-	//PC0 = left
-	//PC1 = right
-	//PC2 = middle
+
+	uint8_t sensor_left = PINC & (1 << PORTC0);   // Read left sensor
+	uint8_t sensor_center = PINC & (1 << PORTC1); // Read center sensor
+	uint8_t sensor_right = PINC & (1 << PORTC2);  // Read right sensor
 	
-	if((PINC & slaveMaskForward) == 3){
+	if(!sensor_center && sensor_left && sensor_right){
 		forward = true;
 		left = false;
 		right = false;
-	}
-	
-	if((PINC & slaveMaskLeft) == 6){
+	}else if(sensor_center && !sensor_left && sensor_right){
 		forward = false;
 		left = true;
 		right = false;
-	}
-	
-	if((PINC & slaveMaskRight) == 5){
+	}else if(sensor_center && sensor_left && !sensor_right){
 		forward = false;
 		left = false;
 		right = true;
+	}else{
+		motorForward(0,0);
+		forward = false;
+		left = false;
+		right = false;
 	}
 	
 	if(forward){
-		motorForward(slaveSpeed,slaveSpeed);
-	}
-	
-	if(left){
-		tankTurnRight(slaveSpeed);
-	}
-	
-	if(right){
+		motorForward(slaveSpeed, slaveSpeed);
+	}else if(left){
+		tankTurnLeft(slaveSpeed);
+	}else if(right){
 		tankTurnRight(slaveSpeed);
 	}
 }

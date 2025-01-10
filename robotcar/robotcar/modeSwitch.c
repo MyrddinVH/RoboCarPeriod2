@@ -13,7 +13,7 @@
 #include "remoteControl.h"
 
 enum modeNames {REMOTE,SLAVE,AUTO};
-volatile uint8_t mode = REMOTE;
+volatile uint8_t mode = SLAVE;
 
 void modeSwitcher(void){
 		switch (mode){

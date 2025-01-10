@@ -31,6 +31,8 @@ int main(void){
 
 	DDRB |= (1<<DDB0) | (1<<DDB1) | (1<<DDB2);
 	
+	DDRC &= ~((1<<DDC0) | (1<<DDC1) | (1<<DDC2));
+	
 	PORTC |= (1<<PORTC4);
 	
 	// PWM setup
