@@ -10,20 +10,18 @@
 #include <stdbool.h>
 #include "motorControl.h"
 
-volatile uint8_t speedSlave = 40;
+volatile uint8_t slaveSpeed = 40;
+volatile _Bool forward;
+volatile _Bool left;			 //    MRL
+volatile _Bool right;		  //PC76543210
+volatile int slaveMaskForward = 0b00000011;
+volatile int slaveMaskLeft 	  = 0b00000110;
+volatile int slaveMaskRight   = 0b00000101;
 
-void slaveMode(){
+void slaveMode(void){
 	//PC0 = left
 	//PC1 = right
 	//PC2 = middle
-	
-	_Bool forward;
-	_Bool left;					//MRL
-	_Bool right;		 //PC76543210
-	int slaveMaskForward = 0b00000011;
-	int slaveMaskLeft 	 = 0b00000110;
-	int slaveMaskRight   = 0b00000101;
-
 	
 	if((PINC & slaveMaskForward) == 3){
 		forward = true;
@@ -43,21 +41,15 @@ void slaveMode(){
 		right = true;
 	}
 	
-	if((PINC & 0b00000111) == 7){
-		forward = true;
-		left = false;
-		right = false;
-	}
-	
 	if(forward){
-		motorForward(speedSlave,speedSlave);
+		motorForward(slaveSpeed,slaveSpeed);
 	}
 	
 	if(left){
-		tankTurnLeft(speedSlave);
+		tankTurnRight(slaveSpeed);
 	}
 	
 	if(right){
-		tankTurnRight(speedSlave);
+		tankTurnRight(slaveSpeed);
 	}
 }
