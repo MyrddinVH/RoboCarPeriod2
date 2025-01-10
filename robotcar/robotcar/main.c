@@ -52,6 +52,7 @@ int main(void){
 	OCR0A = 0;
 	OCR0B = 0;
 	
+	usart0_init();
 
     lcd_init(LCD_ON_DISPLAY);
     lcd_backlight(1);	

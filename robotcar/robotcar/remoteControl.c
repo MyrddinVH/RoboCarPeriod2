@@ -15,7 +15,7 @@ void remoteControl()
     DDRB = (1<<DDB5);
 
     SoftSerialInit();
-    usart0_init();
+//     usart0_init();
     sei();
 	
 	int bluetoothspeed = 10; // initial speed, equal to lowest setting
