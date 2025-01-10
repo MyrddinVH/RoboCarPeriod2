@@ -17,8 +17,8 @@ void remoteControl()
     SoftSerialInit();
     usart0_init();
     sei();
-
-    SoftSerialTransmitString("\r\nSoftSerial demo\r\n");
+	
+	int bluetoothspeed = 10;
 
     while (1)
     {
@@ -31,34 +31,42 @@ void remoteControl()
 
 			    case '1': // stop
 			    usart0_transmitStr("stopstopstopstopstop\n");
+				motorForward(0,0);
 			    break;
 
 			    case 'w': // foreward
 			    SoftSerialTransmitString("move foreward\n");
+				motorForward(bluetoothspeed,bluetoothspeed);
 			    break;
 
 			    case 'a': // right
 			    SoftSerialTransmitString("turn right\n");
+				motorForward(30, 5);
 			    break;
 				
 				case 'd': // left
 				SoftSerialTransmitString("turn left");
+				motorForward(5,30);
 				break;
 				
 				case 's' // backwards
 				SoftSerialTransmitString("move backward");
+				motorBackward(bluetoothspeed,bluetoothspeed);
 				break;
 				
 				case 'p' // speed 1
 				SoftSerialTransmitString("speed 1 selected");
+				bluetoothspeed = 10;
 				break;
 				
 				case '2' // speed 2
 				SoftSerialTransmitString("speed 2 selected");
+				bluetoothspeed = 30;
 				break;
 				
 				case '3' // speed 3
 				SoftSerialTransmitString("speed 3 selected");
+				bluetoothspeed = `50;
 				break;
 
 			    default: // prevent undefined
