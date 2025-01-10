@@ -54,6 +54,17 @@
       <ToolName>mEDBG</ToolName>
     </com_atmel_avrdbg_tool_medbg>
     <avrtoolinterface>debugWIRE</avrtoolinterface>
+    <com_atmel_avrdbg_tool_simulator>
+      <ToolOptions xmlns="">
+        <InterfaceProperties>
+        </InterfaceProperties>
+        <InterfaceName>debugWIRE</InterfaceName>
+      </ToolOptions>
+      <ToolType xmlns="">com.atmel.avrdbg.tool.simulator</ToolType>
+      <ToolNumber xmlns="">
+      </ToolNumber>
+      <ToolName xmlns="">Simulator</ToolName>
+    </com_atmel_avrdbg_tool_simulator>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -134,6 +145,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Debugger.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Debugger.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="i2cmaster.h">
       <SubType>compile</SubType>
     </Compile>
@@ -147,6 +164,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="millis.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="millis.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="modeSwitch.c">

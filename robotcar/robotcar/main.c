@@ -50,15 +50,20 @@ int main(void){
 	// Initial speed set
 	OCR0A = 0;
 	OCR0B = 0;
+	
+
 			
 
     while (1){
+    lcd_init(LCD_ON_DISPLAY);
+    lcd_backlight(1);		
+		lcd_clrscr();		
 		if(modeSwitch){
 			modeSwitcher();
 			modeSwitch = false;
-		}
-		
-		modeChecker();		
-    }
+		}		
+		modeChecker();
+	}
+
 }
 

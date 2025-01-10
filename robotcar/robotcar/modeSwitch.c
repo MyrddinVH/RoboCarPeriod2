@@ -32,9 +32,18 @@ void modeSwitcher(void){
 void modeChecker(void){
 	if(mode == REMOTE){
 		remoteControl();
+		lcd_clrscr();
+		lcd_gotoxy(5,0);
+		lcd_puts("REMOTE");
 	}else if(mode == SLAVE){
 		slaveMode();
+		lcd_clrscr();
+		lcd_gotoxy(5,0);
+		lcd_puts("SLAVE");		
 	}else if(mode == AUTO){
-		ultrasoonMode();
+// 		ultrasoonMode();
+		lcd_clrscr();
+		lcd_gotoxy(5,0);
+		lcd_puts("AUTO");
 	}
 }
