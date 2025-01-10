@@ -29,21 +29,39 @@ void remoteControl()
 		    switch( data )
 		    {
 
-			    case '1':
-			    //PINB = (1<<PINB5);
-			    //PINB |= (1<<PINB0);
-			    usart0_transmitStr("it workss\n");
+			    case '1': // stop
+			    usart0_transmitStr("stopstopstopstopstop\n");
 			    break;
 
-			    case 'h':
-			    SoftSerialTransmitString("hello world!\r\n");
+			    case 'w': // foreward
+			    SoftSerialTransmitString("move foreward\n");
 			    break;
 
-			    case 'H':
-			    SoftSerialTransmitString("HELLO WORLD!\r\n");
+			    case 'a': // right
+			    SoftSerialTransmitString("turn right\n");
 			    break;
+				
+				case 'd': // left
+				SoftSerialTransmitString("turn left");
+				break;
+				
+				case 's' // backwards
+				SoftSerialTransmitString("move backward");
+				break;
+				
+				case 'p' // speed 1
+				SoftSerialTransmitString("speed 1 selected");
+				break;
+				
+				case '2' // speed 2
+				SoftSerialTransmitString("speed 2 selected");
+				break;
+				
+				case '3' // speed 3
+				SoftSerialTransmitString("speed 3 selected");
+				break;
 
-			    default:
+			    default: // prevent undefined
 			    SoftSerialTransmitString("Unknown command\r\n");
 			    break;
 		    }
