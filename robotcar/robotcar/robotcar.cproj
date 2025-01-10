@@ -187,6 +187,12 @@
     <Compile Include="slaveMode.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="SoftSerial.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SoftSerial.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="timeSaving.c">
       <SubType>compile</SubType>
     </Compile>
