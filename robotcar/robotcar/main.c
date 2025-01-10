@@ -16,6 +16,7 @@
 #include "ultrasoonMode.h"
 #include "timeSaving.h"
 #include "modeSwitch.h"
+#include "Debugger.h"
 
 volatile _Bool modeSwitch = false;
 
