@@ -49,24 +49,24 @@ void remoteControl()
 				motorForward(5,30);
 				break;
 				
-				case 's' // backwards
+				case 's': // backwards
 				SoftSerialTransmitString("move backward");
 				motorBackward(bluetoothspeed,bluetoothspeed);
 				break;
 				
-				case 'p' // speed 1
+				case 'p': // speed 1
 				SoftSerialTransmitString("speed 1 selected");
 				bluetoothspeed = 10;
 				break;
 				
-				case '2' // speed 2
+				case '2': // speed 2
 				SoftSerialTransmitString("speed 2 selected");
 				bluetoothspeed = 30;
 				break;
 				
-				case '3' // speed 3
+				case '3': // speed 3
 				SoftSerialTransmitString("speed 3 selected");
-				bluetoothspeed = `50;
+				bluetoothspeed = 50;
 				break;
 
 			    default: // prevent undefined
