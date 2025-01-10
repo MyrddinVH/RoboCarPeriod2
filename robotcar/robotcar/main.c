@@ -16,11 +16,12 @@
 #include "ultrasoonMode.h"
 #include "timeSaving.h"
 #include "modeSwitch.h"
+#include "Debugger.h"
 
 volatile _Bool modeSwitch = false;
 
 ISR(PCINT1_vect){
-	if((PINC & (1<<PINC4)) == 0){
+	if((PINC & (1<<PINC4)) == 1){
 		modeSwitch = true;
 	}
 }
@@ -31,10 +32,10 @@ int main(void){
 
 	DDRB |= (1<<DDB0) | (1<<DDB1) | (1<<DDB2);
 	
-	DDRC &= ~((1<<DDC0) | (1<<DDC1) | (1<<DDC2));
+	DDRC &= ~((1<<DDC0) | (1<<DDC1) | (1<<DDC2) | (1<<DDC4));
 	
 	PORTC |= (1<<PORTC4);
-	
+		
 	// PWM setup
 	TCCR0A |= (1<<WGM00);
 	TCCR0B |= (1<<CS02) | (1<<CS00);
@@ -51,13 +52,12 @@ int main(void){
 	OCR0A = 0;
 	OCR0B = 0;
 	
-
-			
+	motorForward(0,0);			
+    lcd_init(LCD_ON_DISPLAY);
+    lcd_backlight(1);
+	usart0_init();
 
     while (1){
-    lcd_init(LCD_ON_DISPLAY);
-    lcd_backlight(1);		
-		lcd_clrscr();		
 		if(modeSwitch){
 			modeSwitcher();
 			modeSwitch = false;
