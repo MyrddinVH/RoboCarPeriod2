@@ -7,6 +7,7 @@
 #define F_CPU 16000000UL
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <util/delay.h>
 #include "LCD.h"
 #include "slaveMode.h"
 #include "ultrasoonMode.h"
@@ -22,22 +23,25 @@ void modeSwitcher(void){
 		case REMOTE:
 		mode = SLAVE;
 		lcd_clrscr();
-		lcd_gotoxy(5,0);
-		usart0_transmitStr("remote");
+		_delay_ms(20);
+		lcd_gotoxy(3,0);
+		_delay_ms(20);
 		lcd_puts("REMOTE");
 		break;
 		case SLAVE:
 		mode = AUTO;
 		lcd_clrscr();
-		lcd_gotoxy(5,0);
-		usart0_transmitStr("slave");
+		_delay_ms(20);
+		lcd_gotoxy(3,0);
+		_delay_ms(20);
 		lcd_puts("SLAVE");
 		break;
 		case AUTO:
 		mode = REMOTE;
 		lcd_clrscr();
-		lcd_gotoxy(5,0);
-		usart0_transmitStr("auto");
+		_delay_ms(20);
+		lcd_gotoxy(3,0);
+		_delay_ms(20);
 		lcd_puts("AUTO");
 		break;
 	}
