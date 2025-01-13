@@ -10,7 +10,7 @@
 #include "SoftSerial.h"
 #include "Debugger.h"
 
-void remoteControl()
+void RemoteControlInit()
 {
     DDRB = (1<<DDB5);
 
@@ -19,8 +19,9 @@ void remoteControl()
     sei();
 	
 	int bluetoothspeed = 10; // initial speed, equal to lowest setting
-
-    while (1)
+}
+void RemoteControlLoop()
+{
     {
 	    if(SoftSerialUnread() > 0)
 	    {

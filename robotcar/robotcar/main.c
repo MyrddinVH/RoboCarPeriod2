@@ -54,6 +54,8 @@ int main(void){
 	OCR0B = 0;
 	
 	usart0_init();
+	
+	RemoteControlInit();
 
     lcd_init(LCD_ON_DISPLAY);
     lcd_backlight(1);		
@@ -63,6 +65,7 @@ int main(void){
 			modeSwitch = false;
 		}		
 		modeChecker();
+		RemoteControlLoop();
 	}
 
 }
