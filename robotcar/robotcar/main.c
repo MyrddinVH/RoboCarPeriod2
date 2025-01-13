@@ -11,7 +11,7 @@
 #include <avr/interrupt.h>
 #include "LCD.h"
 #include "motorControl.h"
-#include "remoteControl.h"
+#include "SoftSerial.h"
 #include "slaveMode.h"
 #include "ultrasoonMode.h"
 #include "timeSaving.h"
@@ -59,13 +59,15 @@ int main(void){
 
     lcd_init(LCD_ON_DISPLAY);
     lcd_backlight(1);		
-    while (1){
-		if(modeSwitch){
+    while (1)
+	{
+		if(modeSwitch)
+		{
 			modeSwitcher();
 			modeSwitch = false;
 		}		
 		modeChecker();
-		RemoteControlLoop();
+		RemoteControlloop();
 	}
 
 }

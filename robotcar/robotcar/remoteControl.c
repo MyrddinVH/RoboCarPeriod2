@@ -9,6 +9,7 @@
 #include <avr/interrupt.h>
 #include "SoftSerial.h"
 #include "Debugger.h"
+int bluetoothspeed = 10; // initial speed, equal to lowest setting
 
 void RemoteControlInit()
 {
@@ -17,10 +18,8 @@ void RemoteControlInit()
     SoftSerialInit();
 //     usart0_init();
     sei();
-	
-	int bluetoothspeed = 10; // initial speed, equal to lowest setting
 }
-void RemoteControlLoop()
+void RemoteControlloop()
 {
     {
 	    if(SoftSerialUnread() > 0)
@@ -31,7 +30,7 @@ void RemoteControlLoop()
 		    {
 
 			    case '1': // stop
-			    usart0_transmitStr("stopstopstopstopstop\n");
+			    SoftSerialTransmitString("stopstopstopstopstop\n");
 				motorForward(0,0);
 			    break;
 

@@ -1,19 +1,3 @@
-/*
- * SoftSerial.c
- *
- * Half duplex interrupt driven UART implementation.
- * Supports 9600 bps only.
- * RX pin is PD2
- * TX pin is PD3
- *
- * This SoftSerial driver combines the drivers as implemented in application
- * notes AVR304 and AVR306.
- *
- * Resources used by this driver are TC0 and INT0.
- *
- * Created: 21-9-2021 20:07:24
- *  Author: Hugo Arends
- */ 
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
