@@ -59,11 +59,15 @@ int main(void){
 	usart0_transmitStr("remote");
 	lcd_puts("REMOTE");		
     while (1){
-		if(modeSwitch){
+/*		if(modeSwitch){
 			modeSwitcher();
 			modeSwitch = false;
 		}		
 		modeChecker();
+		*/
+	tankTurnLeft(200);
+	tankTurnLeft(100);
+	tankTurnLeft(0);
 	}
 
 }
