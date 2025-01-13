@@ -56,13 +56,12 @@ int main(void){
     lcd_init(LCD_ON_DISPLAY);
     lcd_backlight(1);		
     while (1){
-/*		if(modeSwitch){
+		if(modeSwitch){
 			modeSwitcher();
 			modeSwitch = false;
 		}		
 		modeChecker();
-		*/
-	tankTurnLeft(0);
+		
 	}
 
 }
