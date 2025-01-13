@@ -65,8 +65,6 @@ int main(void){
 		}		
 		modeChecker();
 		*/
-	tankTurnLeft(200);
-	tankTurnLeft(100);
 	tankTurnLeft(0);
 	}
 
