@@ -4,7 +4,7 @@
  * Created: 29-11-2024 09:20:00
  *  Author: Huub Bouwman, Myrddin van Hallem, Tim de Kuijper and Paul Nguyen
  */ 
-
+#define F_CPU 16000000UL
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdbool.h>
@@ -38,8 +38,7 @@ uint32_t distancePB1 = 0;
 uint32_t distancePB2 = 0;
 volatile uint32_t ms = 0;
 
-bool objectDetected = false;
-
+_Bool objectDetected = false;
 
 
 int sensorToRead = 1;
@@ -181,7 +180,7 @@ void checkForObject(){
 }
 
 void driver(){
-	static bool turning = false; // Indicates if the car is currently turning
+	static _Bool turning = false; // Indicates if the car is currently turning
 	static uint32_t turnStartMillis = 0; // Stores the time when the turn started
 
 	if (!objectDetected && !turning) {
@@ -225,6 +224,5 @@ void runUltrasoon(){
 	pulseTimer();
 	checkForObject();
 	driver();
-// 	driver2();
 }
 

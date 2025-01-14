@@ -7,12 +7,13 @@
 #define F_CPU (16000000UL)
 #include <avr/io.h>
 #include <util/delay.h>
+#include <stdbool.h>
 #include "LCD.h"
 
-int forwardcalled = 0;
-int backwardcalled = 0;
-int leftcalled = 0;
-int rightcalled = 0;
+_Bool forwardcalled = 0;
+_Bool backwardcalled = 0;
+_Bool leftcalled = 0;
+_Bool rightcalled = 0;
 
 
 // Motor forward functie voor snellheid aanpassen integers van 0 -> 255 maximaalvoid motorForward(int speed1, int speed2){	PORTB &= ~(1<<PORTB0); // PortB bit 0 uitzetten

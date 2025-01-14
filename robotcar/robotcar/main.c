@@ -9,7 +9,7 @@
 #include <util/delay.h>
 #include <stdbool.h>
 #include <avr/interrupt.h>
-#include "LCD.h"
+#include "lcd.h"
 #include "motorControl.h"
 #include "remoteControl.h"
 #include "slaveMode.h"

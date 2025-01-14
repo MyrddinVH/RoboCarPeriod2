@@ -10,12 +10,13 @@
 #define ULTRASOONMODE_H_
 
 // #include "millis.h"
-
 void initHCSR04();
 void sendPulse();
 uint32_t millis(void);
 void millis_init(void);
 void checkForObject();
 void runUltrasoon();
+void pulseTimer(void);
+extern _Bool objectDetected;
 
 #endif /* ULTRASOONMODE_H_ */

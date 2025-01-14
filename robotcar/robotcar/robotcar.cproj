@@ -181,6 +181,9 @@
     <Compile Include="motorControl.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="motorControl.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="remoteControl.c">
       <SubType>compile</SubType>
     </Compile>

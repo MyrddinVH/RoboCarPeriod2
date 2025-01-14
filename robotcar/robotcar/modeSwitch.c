@@ -26,7 +26,7 @@ void modeSwitcher(void){
 		_delay_ms(20);
 		lcd_gotoxy(3,0);
 		_delay_ms(20);
-		lcd_puts("REMOTE");
+		lcd_puts("SLAVE");
 		break;
 		case SLAVE:
 		mode = AUTO;
@@ -34,7 +34,7 @@ void modeSwitcher(void){
 		_delay_ms(20);
 		lcd_gotoxy(3,0);
 		_delay_ms(20);
-		lcd_puts("SLAVE");
+		lcd_puts("AUTO");
 		break;
 		case AUTO:
 		mode = REMOTE;
@@ -42,7 +42,7 @@ void modeSwitcher(void){
 		_delay_ms(20);
 		lcd_gotoxy(3,0);
 		_delay_ms(20);
-		lcd_puts("AUTO");
+		lcd_puts("REMOTE");
 		break;
 	}
 }

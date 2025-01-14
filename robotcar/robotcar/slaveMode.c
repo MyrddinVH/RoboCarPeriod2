@@ -9,6 +9,7 @@
 #include <util/delay.h>
 #include <stdbool.h>
 #include "motorControl.h"
+#include "ultrasoonMode.h"
 
 volatile uint8_t slaveSpeed = 70;
 volatile _Bool Forward = false;
@@ -17,19 +18,19 @@ volatile _Bool Right   = false;		  //PC76543210
 
 void slaveMode(void){
 
-	uint8_t sensor_left = PINC & (1 << PORTC0);   // Read left sensor
-	uint8_t sensor_center = PINC & (1 << PORTC2); // Read center sensor
-	uint8_t sensor_right = PINC & (1 << PORTC1);  // Read right sensor
+	_Bool sensorLeft   = PINC & (1 << PORTC0);   // Read left sensor
+	_Bool sensorCenter = PINC & (1 << PORTC2);   // Read center sensor
+	_Bool sensorRight  = PINC & (1 << PORTC1);   // Read right sensor
 	
-	if(!sensor_center && sensor_left && sensor_right){
+	if(!sensorCenter){
 		Forward = true;
 		Left = false;
 		Right = false;
-	}else if(sensor_center && !sensor_left && sensor_right){
+	}else if(sensorCenter && !sensorLeft){
 		Forward = false;
 		Left = true;
 		Right = false;
-	}else if(sensor_center && sensor_left && !sensor_right){
+	}else if(sensorCenter && !sensorRight){
 		Forward = false;
 		Left = false;
 		Right = true;
@@ -37,6 +38,15 @@ void slaveMode(void){
 		Forward = false;
 		Left = false;
 		Right = false;
+	}
+	
+	pulseTimer();
+	checkForObject();
+	if(objectDetected){
+		slaveSpeed = 0;
+		objectDetected = false;
+	}else{
+		slaveSpeed = 70;
 	}
 	
 	if(Forward){
