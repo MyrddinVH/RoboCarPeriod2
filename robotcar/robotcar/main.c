@@ -9,15 +9,13 @@
 #include <util/delay.h>
 #include <stdbool.h>
 #include <avr/interrupt.h>
-#include "lcd.h"
+#include "LCD.h"
 #include "motorControl.h"
-#include "SoftSerial.h"
+#include "remoteControl.h"
 #include "slaveMode.h"
-#include "SoftSerial.h"
+#include "ultrasoonMode.h"
 #include "timeSaving.h"
 #include "modeSwitch.h"
-#include "Debugger.h"
-#include "i2cmaster.h"
 
 volatile _Bool modeSwitch = false;
 
@@ -54,21 +52,16 @@ int main(void){
 	OCR0A = 0;
 	OCR0B = 0;
 	
-	usart0_init();
-	
-	RemoteControlInit();
 
     lcd_init(LCD_ON_DISPLAY);
     lcd_backlight(1);		
-    while (1)
-	{
-		if(modeSwitch)
-		{
+    while (1){
+		if(modeSwitch){
 			modeSwitcher();
 			modeSwitch = false;
 		}		
 		modeChecker();
-		RemoteControlLoop();
+		
 	}
 
 }
