@@ -17,6 +17,8 @@ void millis_init(void);
 void checkForObject();
 void runUltrasoon();
 void pulseTimer(void);
-extern _Bool objectDetected;
+// extern _Bool objectDetected;
+extern uint32_t distancePB1;
+extern uint32_t distancePB2;
 
 #endif /* ULTRASOONMODE_H_ */

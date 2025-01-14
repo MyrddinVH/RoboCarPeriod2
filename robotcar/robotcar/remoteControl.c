@@ -9,5 +9,5 @@
 #include "motorControl.h"
 
 void remoteControl(){
-	motorBackward(100, 100);
+// 	motorBackward(100, 100);
 }

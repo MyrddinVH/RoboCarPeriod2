@@ -36,7 +36,7 @@ _Bool rightcalled = 0;
 	PORTD |= (1<<PORTD7);	OCR0A = speed;
 	OCR0B = 255 - speed;	if (leftcalled == 0){
 			forwardcalled = 0;
-			leftcalled = 0;
+			rightcalled = 0;
 			backwardcalled = 0;	
 			leftcalled = 1;
 			tankDirection();
@@ -45,31 +45,31 @@ _Bool rightcalled = 0;
 	OCR0B = speed;	if (rightcalled == 0){
 			forwardcalled = 0;
 			backwardcalled = 0;
-			rightcalled = 0;
+			leftcalled = 0;
 			rightcalled = 1;
 			tankDirection();
 	}	}
 
-void tankDirection(){			// Local function to show direction
+void tankDirection(void){			// Local function to show direction
 	if (forwardcalled == 1){
 		arrowRemove();
-		lcd_gotoxy(1,0);		_delay_ms(20);		lcd_puts("^");		
+		lcd_gotoxy(1,1);		_delay_ms(20);		lcd_puts("V");		
 	}
 	if (backwardcalled == 1){
 		arrowRemove();
-		lcd_gotoxy(1,1);		_delay_ms(20);		lcd_puts("V");	
+		lcd_gotoxy(1,0);		_delay_ms(20);		lcd_puts("^");	
 	}
-	if (rightcalled == 1){
+	if (leftcalled == 1){
 		arrowRemove();
 		lcd_gotoxy(0,1);		_delay_ms(20);		lcd_puts("<");
 	}
-	if (leftcalled == 1){
+	if (rightcalled == 1){
 		arrowRemove();
 		lcd_gotoxy(2,1);		_delay_ms(20);		lcd_puts(">");	
 	}			
 }
 
-void arrowRemove(){
+void arrowRemove(void){
 		lcd_gotoxy(1,0);		_delay_ms(20);		lcd_puts(" ");
 		_delay_ms(20);
 		lcd_gotoxy(1,1);		_delay_ms(20);		lcd_puts(" ");

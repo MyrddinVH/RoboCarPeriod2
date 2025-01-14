@@ -22,6 +22,7 @@ void slaveMode(void){
 	_Bool sensorCenter = PINC & (1 << PORTC2);   // Read center sensor
 	_Bool sensorRight  = PINC & (1 << PORTC1);   // Read right sensor
 	
+	//check wich way the car needs to turn or just go straight
 	if(!sensorCenter){
 		Forward = true;
 		Left = false;
@@ -40,15 +41,17 @@ void slaveMode(void){
 		Right = false;
 	}
 	
+	//gets a distance from the ultrasonic sensors to make sure it doesn't collide
 	pulseTimer();
-	checkForObject();
-	if(objectDetected){
-		slaveSpeed = 0;
-		objectDetected = false;
+	if(distancePB1 >= 50 || distancePB2 >= 50){
+		if(distancePB1 != 0 || distancePB2 != 0){
+			slaveSpeed = 0;
+		}
 	}else{
 		slaveSpeed = 70;
 	}
 	
+	//decide wich way it needs to go at what speed
 	if(Forward){
 		motorForward(slaveSpeed, slaveSpeed);
 	}else if(Left){

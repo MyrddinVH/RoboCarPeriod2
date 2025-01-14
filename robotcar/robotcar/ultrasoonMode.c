@@ -25,7 +25,6 @@ enum driveDirection directionToDrive;
 
 
 unsigned long pulseIn(volatile uint8_t *port, uint8_t pin, uint8_t state, unsigned long timeout_us);
-void pulseTimer();
 
 // uint32_t timeToTurn = 3000;
 uint32_t previousTurnMillis = 0;
@@ -64,7 +63,7 @@ void pulseTimer(){
 }
 
 void sendPulse(){
-		PORTD |= (1 << PORTD4);
+		PORTD |= (1<<PORTD4);
 		_delay_us(10);
 		PORTD &= ~(1<<PORTD4);
 	
@@ -225,4 +224,3 @@ void runUltrasoon(){
 	checkForObject();
 	driver();
 }
-
