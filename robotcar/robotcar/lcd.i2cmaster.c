@@ -127,7 +127,7 @@ void lcd_init(unsigned char command)
     wr_lcd_mode(command, 0);
 }
 
-void lcd_backlight(char on)
+void LCD_Backlight(char on)
 {
     wr_lcd_mode(on, 8);
 }

@@ -264,3 +264,9 @@ extern void lcd_data(uint8_t data);
 
 /*@}*/
 #endif //LCD_H
+
+//missing LCD prototypes added here -Huub
+
+void LCD_Backlight(char on);
+
+void tankDirection(void);

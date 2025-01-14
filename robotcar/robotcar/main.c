@@ -54,7 +54,7 @@ int main(void){
 	
 
     lcd_init(LCD_ON_DISPLAY);
-    lcd_backlight(1);		
+    LCD_Backlight(1);		
     while (1){
 		if(modeSwitch){
 			modeSwitcher();
