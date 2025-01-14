@@ -13,7 +13,7 @@ int bluetoothspeed = 10; // initial speed, equal to lowest setting
 
 void RemoteControlInit()
 {
-    DDRB = (1<<DDB5);
+    DDRB &= ~(1<<DDD3);
 
     SoftSerialInit();
 //     usart0_init();
@@ -21,7 +21,6 @@ void RemoteControlInit()
 }
 void RemoteControlLoop()
 {
-    {
 	    if(SoftSerialUnread() > 0)
 	    {
 		    char data = SoftSerialReceiveByte();
@@ -73,7 +72,5 @@ void RemoteControlLoop()
 			    SoftSerialTransmitString("Unknown / no command\n");
 			    break;
 		    }
-
-	    }
-    }
+	}
 }
