@@ -41,12 +41,12 @@ void RemoteControlLoop()
 
 			    case 'a': // right
 			    SoftSerialTransmitString("turn right\n");
-				motorForward(30, 5);
+				tankTurnRight(50);
 			    break;
 				
 				case 'd': // left
 				SoftSerialTransmitString("turn left\n");
-				motorForward(5,30);
+				tankTurnLeft(50);
 				break;
 				
 				case 's': // backwards
@@ -70,7 +70,7 @@ void RemoteControlLoop()
 				break;
 
 			    default: // prevent undefined
-			    SoftSerialTransmitString("Unknown command\n");
+			    SoftSerialTransmitString("Unknown / no command\n");
 			    break;
 		    }
 
