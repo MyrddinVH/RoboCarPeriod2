@@ -50,7 +50,7 @@ void modeSwitcher(void){
 void modeChecker(void){
 	if(mode == REMOTE){
 		RemoteControlInit();
-		RemoteControlloop();
+		RemoteControlLoop();
 	}else if(mode == SLAVE){
 		slaveMode();
 	}else if(mode == AUTO){

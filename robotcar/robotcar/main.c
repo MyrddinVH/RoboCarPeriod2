@@ -67,7 +67,7 @@ int main(void){
 			modeSwitch = false;
 		}		
 		modeChecker();
-		RemoteControlloop();
+		RemoteControlLoop();
 	}
 
 }

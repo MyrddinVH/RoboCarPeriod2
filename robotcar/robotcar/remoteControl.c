@@ -19,7 +19,7 @@ void RemoteControlInit()
 //     usart0_init();
     sei();
 }
-void RemoteControlloop()
+void RemoteControlLoop()
 {
     {
 	    if(SoftSerialUnread() > 0)

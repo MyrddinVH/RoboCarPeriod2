@@ -3,7 +3,7 @@
 
 /* Prototypes */
 void RemoteControlInit(void);
-void RemoteControlloop(void);
+void RemoteControlLoop(void);
 void SoftSerialInit(void);
 char SoftSerialReceiveByte(void);
 void SoftSerialTransmitByte(char data);
