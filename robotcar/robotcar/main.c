@@ -9,14 +9,15 @@
 #include <util/delay.h>
 #include <stdbool.h>
 #include <avr/interrupt.h>
-#include "LCD.h"
+#include "lcd.h"
 #include "motorControl.h"
 #include "SoftSerial.h"
 #include "slaveMode.h"
-#include "ultrasoonMode.h"
+#include "SoftSerial.h"
 #include "timeSaving.h"
 #include "modeSwitch.h"
 #include "Debugger.h"
+#include "i2cmaster.h"
 
 volatile _Bool modeSwitch = false;
 
