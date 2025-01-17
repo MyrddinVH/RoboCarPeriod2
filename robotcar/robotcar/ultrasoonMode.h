@@ -17,7 +17,7 @@ void millis_init(void);
 void checkForObject();
 void runUltrasoon();
 void pulseTimer(void);
-// extern _Bool objectDetected;
+// extern integers distance for the ultrasonic sensors;
 extern uint32_t distancePB1;
 extern uint32_t distancePB2;
 

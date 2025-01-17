@@ -31,8 +31,9 @@ uint32_t previousTurnMillis = 0;
 uint32_t currentTurnMillis = 0;
 
 uint32_t previousmillis = 0;
+uint32_t currentMillis = 0;
 // unsigned long currentmillis = 0;
-uint32_t interval = 60;
+uint32_t interval = 100;
 uint32_t distancePB1 = 0;
 uint32_t distancePB2 = 0;
 volatile uint32_t ms = 0;
@@ -44,9 +45,9 @@ int sensorToRead = 1;
 
 
 void initHCSR04(){
-	DDRD |= (1<<PORTD4); //set PD4 as output
-	DDRB &= ~(1<<PORTB1); //set PB1 as trigger
-	DDRB &= ~(1<<PORTB2);
+	DDRD |= (1<<PORTD4); //set PD4 as output(trigger)
+	DDRB &= ~(1<<PORTB1); //set PB1 as input(echo)
+	DDRB &= ~(1<<PORTB2);// set PB2 as input(echo)
 
 	PORTD &= ~(1 << PORTD4); //trigger is set to low by default
 	usart0_transmitStr("ultrasoon initialized");
@@ -54,11 +55,11 @@ void initHCSR04(){
 
 
 void pulseTimer(){
-	unsigned long currentmillis = millis();
+	currentMillis = millis();
 	
- 	if(currentmillis - previousmillis >= interval){
+ 	if(currentMillis - previousmillis >= interval){
  		sendPulse();
-		previousmillis = currentmillis;
+		previousmillis = currentMillis;
  	}
 }
 
@@ -70,8 +71,8 @@ void sendPulse(){
 		switch(sensorToRead){
 			case 1:
 			distancePB1 = pulseIn(&PINB, PORTB1, 1, TIME_OUT_IN_US);
-			distancePB1 = distancePB1 / 10;
-			char temp[50];
+			distancePB1 = distancePB1 * 0.034 / 2;
+// 			char temp[50];
 // 			sprintf(temp, "%d", distancePB1);
 // 			usart0_transmitStr("sensor on PB1");
 // 			usart0_transmitStr("\n");
@@ -81,7 +82,7 @@ void sendPulse(){
 			break;
 			case 2:
 			distancePB2 = pulseIn(&PINB, PORTB2, 1, TIME_OUT_IN_US);
-			distancePB2 = distancePB2 / 10;
+			distancePB2 = distancePB2 * 0.034 / 2;
 // 			sprintf(temp, "%d", distancePB2);
 // 			usart0_transmitStr("sensor on pb2");
 // 			usart0_transmitStr("\n");

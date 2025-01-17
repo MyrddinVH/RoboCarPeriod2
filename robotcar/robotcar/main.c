@@ -54,14 +54,17 @@ int main(void){
 	
 
     lcd_init(LCD_ON_DISPLAY);
-    lcd_backlight(1);		
+    lcd_backlight(1);
+	initHCSR04();
+	initDebugger();
+	millis_init();
+			
     while (1){
 		if(modeSwitch){
 			modeSwitcher();
 			modeSwitch = false;
 		}		
-		modeChecker();
-		
+		modeChecker();	
 	}
 
 }
