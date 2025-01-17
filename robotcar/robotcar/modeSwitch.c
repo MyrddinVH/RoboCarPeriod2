@@ -11,7 +11,7 @@
 #include "LCD.h"
 #include "slaveMode.h"
 #include "ultrasoonMode.h"
-#include "remoteControl.h"
+#include "SoftSerial.h"
 #include "Debugger.h"
 
 enum modeNames {REMOTE,SLAVE,AUTO};
