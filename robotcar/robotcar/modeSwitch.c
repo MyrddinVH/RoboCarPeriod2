@@ -50,9 +50,9 @@ void modeSwitcher(void){
 void modeChecker(void){
 	if(mode == REMOTE){
 		RemoteControlLoop();
-	}else if(mode == SLAVE){
+		}else if(mode == SLAVE){
 		slaveMode();
-	}else if(mode == AUTO){
+		}else if(mode == AUTO){
 		runUltrasoon();
 	}
 }

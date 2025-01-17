@@ -1,9 +1,9 @@
 /*
- * robotcar.c
- *
- * Created: 22-11-2024 09:46:49
- * Author : Huub Bouwman, Myrddin van Hallem, Tim de Kuijper and Paul Nguyen
- */ 
+* robotcar.c
+*
+* Created: 22-11-2024 09:46:49
+* Author : Huub Bouwman, Myrddin van Hallem, Tim de Kuijper and Paul Nguyen
+*/
 #define F_CPU 16000000UL
 #include <avr/io.h>
 #include <util/delay.h>
@@ -27,7 +27,7 @@ ISR(PCINT0_vect){
 
 int main(void){
 
-    DDRD |= (1<<DDD5) | (1<<DDD7) | (1<<DDD6);
+	DDRD |= (1<<DDD5) | (1<<DDD7) | (1<<DDD6);
 
 	DDRB |= (1<<DDB0) | (1<<DDB1) | (1<<DDB2);
 	DDRB &= ~(1<<DDB4);
@@ -53,15 +53,16 @@ int main(void){
 	OCR0B = 0;
 	
 
-    lcd_init(LCD_ON_DISPLAY);
-    LCD_Backlight(1);
-	RemoteControlInit();		
-    while (1){
-		if(modeSwitch){
-			modeSwitcher();
-			modeSwitch = false;
-		}		
-		modeChecker();
+	lcd_init(LCD_ON_DISPLAY);
+	LCD_Backlight(1);
+	RemoteControlInit();
+	while (1){
+		//if(modeSwitch){
+		//modeSwitcher();
+		//modeSwitch = false;
+		//}
+		//modeChecker();
+		RemoteControlLoop(); // voor testing van remote,
 	}
 
 }
