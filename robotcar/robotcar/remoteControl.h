@@ -10,7 +10,7 @@
 #define REMOTECONTROL_H_
 
 void remoteControl();
-
+void initRemoteControl();
 
 
 #endif /* REMOTECONTROL_H_ */

@@ -50,7 +50,7 @@ void initHCSR04(){
 	DDRB &= ~(1<<PORTB2);// set PB2 as input(echo)
 
 	PORTD &= ~(1 << PORTD4); //trigger is set to low by default
-	usart0_transmitStr("ultrasoon initialized");
+	usart0_transmitStr("ultrasoon initialized\n");
 }
 
 

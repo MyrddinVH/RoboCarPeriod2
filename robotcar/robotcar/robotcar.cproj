@@ -187,7 +187,16 @@
     <Compile Include="remoteControl.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="remoteControl.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="slaveMode.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SoftSerial.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SoftSerial.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="timeSaving.c">
