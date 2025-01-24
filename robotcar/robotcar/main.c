@@ -64,7 +64,8 @@ int main(void){
 			modeSwitcher();
 			modeSwitch = false;
 		}		
-		modeChecker();	
+		modeChecker();
+		LCD_time()	
 	}
 
 }
