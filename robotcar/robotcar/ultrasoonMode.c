@@ -15,12 +15,12 @@
 #include <time.h> 
 #include <avr/interrupt.h>
 
-#define STOP_DISTANCE 150
+#define STOP_DISTANCE 15
 #define TURN_TIME 500
 #define TIME_OUT_IN_US 8000
 #define SPEED_ULTRASOON 70
 
-enum driveDirection{forward, turnLeft, turnRight};
+enum driveDirection{forward, turnLeft, turnRight, stop};
 enum driveDirection directionToDrive;
 
 
@@ -180,28 +180,21 @@ void checkForObject(){
 }
 
 void driver(){
-	static _Bool turning = false; // Indicates if the car is currently turning
-	static uint32_t turnStartMillis = 0; // Stores the time when the turn started
-
-	if (!objectDetected && !turning) {
-		directionToDrive = forward; // Continue forward if no object is detected
-		} else if (!turning) {
-		if (distancePB1 < distancePB2) {
-			directionToDrive = turnLeft;
-			} else if (distancePB1 > distancePB2) {
-			directionToDrive = turnRight;
+	if(distancePB1 != 0 || distancePB2 != 0){
+		if(distancePB1 < STOP_DISTANCE || distancePB2 < STOP_DISTANCE){
+// 			if(distancePB1 > distancePB2){
+				directionToDrive = turnLeft;
+// 			}
+// 			else{
+// 				directionToDrive = turnRight;
+// 			}
 		}
-		turning = true; // Start the turn
-		turnStartMillis = millis(); // Record the start time of the turn
+		else{
+			directionToDrive = forward;
+		}
 	}
-
-	// Check if the car needs to stop turning
-	if (turning) {
-		uint32_t currentMillis = millis();
-		if (currentMillis - turnStartMillis >= TURN_TIME) {
-			turning = false; // Stop turning
-			directionToDrive = forward; // Resume forward motion
-		}
+	else{
+		directionToDrive = forward;
 	}
 
 	// Execute motion based on directionToDrive
@@ -210,18 +203,22 @@ void driver(){
 		motorForward(SPEED_ULTRASOON, SPEED_ULTRASOON);
 		break;
 		case turnLeft:
-		tankTurnLeft(SPEED_ULTRASOON / 2);
+		tankTurnLeft(SPEED_ULTRASOON );
 		break;
 		case turnRight:
-		tankTurnRight(SPEED_ULTRASOON / 2);
+		tankTurnRight(SPEED_ULTRASOON);
+		break;
+		case stop:
+		motorForward(0,0);
 		break;
 		default:
+		motorForward(SPEED_ULTRASOON, SPEED_ULTRASOON);
 		break;
-	}
+	}	
 }
 
 void runUltrasoon(){
 	pulseTimer();
-	checkForObject();
+// 	checkForObject();
 	driver();
 }
