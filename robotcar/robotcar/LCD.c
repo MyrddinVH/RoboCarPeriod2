@@ -20,7 +20,11 @@ uint32_t currentTime = 0;
 
 void LCD_time(){
 	time_Handler();
-	LCD_Showtime(LCDhours, LCDminutes);
+	LCD_Showtime_standard(LCDhours, LCDminutes);
+}
+
+void LCD_time_call(){
+	LCD_Showtime_call(LCDhours, LCDminutes);
 }
 
 void time_Handler(){
@@ -41,7 +45,7 @@ void time_Handler(){
 }
 
 
-void LCD_Showtime(int hours, int minutes){
+void LCD_Showtime_standard(int hours, int minutes){
 	if (timeChange == 1){
 		_delay_ms(20);
 		lcd_gotoxy(3,1);
@@ -57,4 +61,19 @@ void LCD_Showtime(int hours, int minutes){
 		variableLCD(minutes);
 		timeChange = 0;		
 	}
+};
+void LCD_Showtime_call(int hours, int minutes){
+		_delay_ms(20);
+		lcd_gotoxy(3,1);
+		_delay_ms(20);
+		variableLCD(hours);
+		_delay_ms(20);
+		lcd_gotoxy(5,1);
+		_delay_ms(20);
+		lcd_puts(":");
+		_delay_ms(20);
+		lcd_gotoxy(7,1);
+		_delay_ms(20);
+		variableLCD(minutes);
+		timeChange = 0;		
 };
