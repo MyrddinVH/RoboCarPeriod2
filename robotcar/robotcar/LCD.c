@@ -6,45 +6,55 @@
  */ 
 
 #include "millis.h"
+#include "ultrasoonMode.h"
 #include <time.h> 
 #include <avr/eeprom.h>
+#include <util/delay.h>
 
+int LCDminutes = 0;
+int LCDhours = 0;
+int timeChange= 1;
 
-int minutes = 0;
-int hours = 0;
-int timeChange= 0;
-
-uint32_t nextmillis = 0;
-uint32_t currentMillis = 0;
+uint32_t nextmillis = 60000;
+uint32_t currentTime = 0;
 
 void LCD_time(){
 	time_Handler();
-	LCD_Showtime();
+	LCD_Showtime(LCDhours, LCDminutes);
 }
 
 void time_Handler(){
-	currentMillis = millis();
-	if (currentMillis == nextmillis){
-		minutes += 1;
+	currentTime = ms;
+	if (currentTime > nextmillis){
+		LCDminutes += 1;
 		nextmillis += 60000;
 		timeChange = 1;
-		eeprom_write_byte(0X20, minutes);
+		//eeprom_write_byte(minutes, 0X20);
 	}
-	if (minutes == 60){
-		hours += 1;
-		minutes = 0;
+	if (LCDminutes == 60){
+		LCDhours += 1;
+		LCDminutes = 0;
 		nextmillis += 60000;
 		timeChange = 1;
-		eeprom_write_byte(0X21, hours);
+		//eeprom_write_byte(hours, 0X21);
 	}
 }
 
 
 void LCD_Showtime(int hours, int minutes){
 	if (timeChange == 1){
+		_delay_ms(20);
 		lcd_gotoxy(3,1);
 		_delay_ms(20);
-		lcd_puts("%d:%d", hours,minutes);
+		variableLCD(hours);
+		_delay_ms(20);
+		lcd_gotoxy(5,1);
+		_delay_ms(20);
+		lcd_puts(":");
+		_delay_ms(20);
+		lcd_gotoxy(7,1);
+		_delay_ms(20);
+		variableLCD(minutes);
 		timeChange = 0;		
 	}
 };

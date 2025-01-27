@@ -39,7 +39,7 @@
 
 #include <inttypes.h>
 #include <avr/pgmspace.h>
-#include <"lcd.c">
+
 /** 
  *  @name  Definitions for MCU Clock Frequency
  *  Adapt the MCU clock frequency in Hz to your target. 
@@ -262,9 +262,9 @@ extern void lcd_data(uint8_t data);
 */
 #define lcd_puts_P(__s)         lcd_puts_p(PSTR(__s))
 
-void LCD_time();
-void time_Handler();
-void LCD_Showtime(int hours, int minutes);
+LCD_time();
+time_Handler();
+LCD_Showtime(int hours, int minutes);
 
 /*@}*/
 #endif //LCD_H

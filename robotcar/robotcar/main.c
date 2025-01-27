@@ -66,7 +66,8 @@ int main(void){
 			modeSwitch = false;
 		}		
 		modeChecker();
-		ledBlinker();	
+		ledBlinker();
+		LCD_time();	
 	}
 
 }
