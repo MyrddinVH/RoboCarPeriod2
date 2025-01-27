@@ -20,5 +20,6 @@ void pulseTimer(void);
 // extern integers distance for the ultrasonic sensors;
 extern uint32_t distancePB1;
 extern uint32_t distancePB2;
+extern volatile uint32_t ms;
 
 #endif /* ULTRASOONMODE_H_ */
