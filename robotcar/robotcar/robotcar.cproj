@@ -163,6 +163,12 @@
     <Compile Include="lcd.i2cmaster.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="LED.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="LED.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>

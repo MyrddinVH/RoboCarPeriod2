@@ -16,6 +16,7 @@
 #include "ultrasoonMode.h"
 #include "timeSaving.h"
 #include "modeSwitch.h"
+#include "LED.h"
 
 volatile _Bool modeSwitch = false;
 
@@ -27,9 +28,9 @@ ISR(PCINT0_vect){
 
 int main(void){
 
-    DDRD |= (1<<DDD5) | (1<<DDD7) | (1<<DDD6);
+    DDRD |= (1<<DDD5) | (1<<DDD7) | (1<<DDD6) | (1<<DDD2);
 
-	DDRB |= (1<<DDB0) | (1<<DDB1) | (1<<DDB2);
+	DDRB |= (1<<DDB0) | (1<<DDB1) | (1<<DDB2) | (1<<DDB3);
 	DDRB &= ~(1<<DDB4);
 	
 	DDRC &= ~((1<<DDC0) | (1<<DDC1) | (1<<DDC2));
@@ -65,7 +66,7 @@ int main(void){
 			modeSwitch = false;
 		}		
 		modeChecker();
-		LCD_time()	
+		ledBlinker();	
 	}
 
 }
