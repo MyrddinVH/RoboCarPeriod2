@@ -11,6 +11,7 @@
 #include "Bluetooth.h"
 
 char recievedData;
+volatile int remoteSpeed = 100;
 
 void remoteInit(void){
 	usart0_init();
@@ -25,24 +26,33 @@ void remoteControl(void) {
 
 	// Perform actions based on the received data
 		switch (recievedData) {
-			case 'b':
-			motorForward(0,0);
-			break;
-			case 'a':
-			tankTurnLeft(100);
-			break;
+			case 1: // set speed 1 (80)
+				remoteSpeed = 80;
+				break;
+			case 2: // set speed 2 (150)
+				remoteSpeed = 150;
+				break;
+			case 3: // set speed 3 (255)
+				remoteSpeed = 255;
+				break;
+			case 'b': //stop  
+				motorForward(0,0);
+				break;
 			case 'd':
-			tankTurnRight(100);
-			break;
+				tankTurnLeft(remoteSpeed);
+				break;
+			case 'a':
+				tankTurnRight(remoteSpeed);
+				break;
 			case 'w':
-			motorForward(100,100);
-			break;
+				motorForward(remoteSpeed,remoteSpeed);
+				break;
 			case 's':
-			motorBackward(100,100);
-			break;
+				motorBackward(remoteSpeed,remoteSpeed);
+				break;
 			default:
-			// Handle invalid command if necessary
-			break;
+				motorForward(0,0);
+				break;
 		}
 	}
 }
