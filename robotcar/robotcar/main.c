@@ -59,6 +59,15 @@ int main(void){
 	initHCSR04();
 	initDebugger();
 	millis_init();
+	
+	lcd_clrscr();
+	_delay_ms(20);
+	lcd_gotoxy(3,0);
+	_delay_ms(20);
+	lcd_puts("REMOTE");
+	_delay_ms(20);
+	LCD_time_call();
+
 			
     while (1){
 		if(modeSwitch){
