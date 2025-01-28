@@ -7,7 +7,6 @@
 #define F_CPU 16000000UL
 #include <avr/io.h>
 #include "motorControl.h"
-#include "remoteControl.h"
 #include "Bluetooth.h"
 
 char recievedData;
@@ -26,32 +25,31 @@ void remoteControl(void) {
 
 	// Perform actions based on the received data
 		switch (recievedData) {
-			case 1: // set speed 1 (80)
+			case '1': // set speed 1 (80)
 				remoteSpeed = 80;
 				break;
-			case 2: // set speed 2 (150)
+			case '2': // set speed 2 (150)
 				remoteSpeed = 150;
 				break;
-			case 3: // set speed 3 (255)
+			case '3': // set speed 3 (255)
 				remoteSpeed = 255;
 				break;
 			case 'b': //stop  
 				motorForward(0,0);
 				break;
-			case 'd':
+			case 'd': // right
 				tankTurnLeft(remoteSpeed);
 				break;
-			case 'a':
+			case 'a': //left
 				tankTurnRight(remoteSpeed);
 				break;
-			case 'w':
+			case 'w': //forward
 				motorForward(remoteSpeed,remoteSpeed);
 				break;
-			case 's':
+			case 's': //backward
 				motorBackward(remoteSpeed,remoteSpeed);
 				break;
 			default:
-				motorForward(0,0);
 				break;
 		}
 	}

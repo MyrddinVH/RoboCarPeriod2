@@ -47,19 +47,19 @@ void ledBlinker(void){
 	}
 	
 	if(ledLeft){
-		PORTD |= (1<<LED_LEFT);
+		PORTB |= (1<<LED_LEFT);
 	}else{
-		PORTD &= ~(1<<LED_LEFT);
+		PORTB &= ~(1<<LED_LEFT);
 	}
 }
 
-void startLeftLedBlink(void){
+void startRightLedBlink(void){
 	startLeftBlink = true;
 	startRightBlink = false;
 	ledRight = false;
 }
 
-void startRightLedBlink(void){
+void startLeftLedBlink(void){
 	startLeftBlink = false;
 	startRightBlink = true;
 	ledLeft = false;
