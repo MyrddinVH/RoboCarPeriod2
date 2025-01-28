@@ -145,10 +145,10 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Debugger.c">
+    <Compile Include="Bluetooth.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Debugger.h">
+    <Compile Include="Bluetooth.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="i2cmaster.h">
