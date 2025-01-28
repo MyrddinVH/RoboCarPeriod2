@@ -45,7 +45,7 @@ void time_Handler(){
 		timeChange = 1;
 		eeprom_write_byte(0x20, LCDminutes);
 	}
-	if (LCDminutes > 60){
+	if (LCDminutes > 59){
 		LCDhours += 1;
 		LCDminutes = 0;
 		nextmillis += 60000;
