@@ -56,9 +56,9 @@ int main(void){
     lcd_init(LCD_ON_DISPLAY);
     lcd_backlight(1);
 	initHCSR04();
-	initDebugger();
 	millis_init();
 	LCD_read_data();
+	remoteInit();
 	
 	lcd_clrscr();
 	_delay_ms(20);
