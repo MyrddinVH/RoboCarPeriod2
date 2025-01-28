@@ -27,20 +27,30 @@ void LCD_time_call(){
 	LCD_Showtime_call(LCDhours, LCDminutes);
 }
 
+void LCD_read_data(){
+LCDminutes = eeprom_read_byte(0x20);
+LCDhours   = eeprom_read_byte(0x21);
+}
+
+void LCD_reset_eeprom(){
+	eeprom_write_byte(0x20, 0);
+	eeprom_write_byte(0x21, 0);	
+}
+
 void time_Handler(){
 	currentTime = ms;
 	if (currentTime > nextmillis){
 		LCDminutes += 1;
 		nextmillis += 60000;
 		timeChange = 1;
-		//eeprom_write_byte(minutes, 0X20);
+		eeprom_write_byte(0x20, LCDminutes);
 	}
-	if (LCDminutes == 60){
+	if (LCDminutes > 60){
 		LCDhours += 1;
 		LCDminutes = 0;
 		nextmillis += 60000;
 		timeChange = 1;
-		//eeprom_write_byte(hours, 0X21);
+		eeprom_write_byte(0x21, LCDhours);
 	}
 }
 
@@ -56,7 +66,7 @@ void LCD_Showtime_standard(int hours, int minutes){
 		_delay_ms(20);
 		lcd_puts(":");
 		_delay_ms(20);
-		lcd_gotoxy(8,1);
+		lcd_gotoxy(7,1);
 		_delay_ms(20);
 		variableLCD(minutes);
 		timeChange = 0;		
@@ -72,7 +82,7 @@ void LCD_Showtime_call(int hours, int minutes){
 		_delay_ms(20);
 		lcd_puts(":");
 		_delay_ms(20);
-		lcd_gotoxy(8,1);
+		lcd_gotoxy(7,1);
 		_delay_ms(20);
 		variableLCD(minutes);
 		timeChange = 0;		

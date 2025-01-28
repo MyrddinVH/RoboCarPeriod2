@@ -53,12 +53,12 @@ int main(void){
 	OCR0A = 0;
 	OCR0B = 0;
 	
-
     lcd_init(LCD_ON_DISPLAY);
     lcd_backlight(1);
 	initHCSR04();
 	initDebugger();
 	millis_init();
+	LCD_read_data();
 	
 	lcd_clrscr();
 	_delay_ms(20);
@@ -67,7 +67,7 @@ int main(void){
 	lcd_puts("REMOTE");
 	_delay_ms(20);
 	LCD_time_call();
-
+	
 			
     while (1){
 		if(modeSwitch){

@@ -267,6 +267,7 @@ LCD_time_call();
 time_Handler();
 LCD_Showtime_standard(int hours, int minutes);
 LCD_Showtime_call(int hours, int minutes);
-
+LCD_read_data();
+LCD_reset_eeprom();
 /*@}*/
 #endif //LCD_H
