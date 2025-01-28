@@ -47,9 +47,9 @@ void ledBlinker(void){
 	}
 	
 	if(ledLeft){
-		PORTD |= (1<<LED_LEFT);
+		PORTB |= (1<<LED_LEFT);
 	}else{
-		PORTD &= ~(1<<LED_LEFT);
+		PORTB &= ~(1<<LED_LEFT);
 	}
 }
 
