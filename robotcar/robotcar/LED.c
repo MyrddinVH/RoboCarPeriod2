@@ -9,14 +9,14 @@
 #include "ultrasoonMode.h"
 
 #define INTERVAL 500
-#define LED_LEFT PORTD2
+#define LED_LEFT PORTB5
 #define LED_RIGHT PORTB3
 
 uint32_t currentMillisLED = 0;
 uint32_t previousMillisLED = 0;
 
-volatile startLeftBlink = 0;
-volatile startRightBlink = 0;
+volatile _Bool startLeftBlink = 0;
+volatile _Bool startRightBlink = 0;
 _Bool ledLeft = 0;
 _Bool ledRight = 0;
 
@@ -47,19 +47,19 @@ void ledBlinker(void){
 	}
 	
 	if(ledLeft){
-		PORTD |= (1<<LED_LEFT);
+		PORTB |= (1<<LED_LEFT);
 	}else{
-		PORTD &= ~(1<<LED_LEFT);
+		PORTB &= ~(1<<LED_LEFT);
 	}
 }
 
-void startLeftLedBlink(void){
+void startRightLedBlink(void){
 	startLeftBlink = true;
 	startRightBlink = false;
 	ledRight = false;
 }
 
-void startRightLedBlink(void){
+void startLeftLedBlink(void){
 	startLeftBlink = false;
 	startRightBlink = true;
 	ledLeft = false;
