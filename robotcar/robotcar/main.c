@@ -28,9 +28,9 @@ ISR(PCINT0_vect){
 
 int main(void){
 
-    DDRD |= (1<<DDD5) | (1<<DDD7) | (1<<DDD6);
+    DDRD |= (1<<DDD5) | (1<<DDD7) | (1<<DDD6) | (1<<DDD2);
 
-	DDRB |= (1<<DDB0) | (1<<DDB1) | (1<<DDB2) | (1<<DDB3) | (1<<DDB5);
+	DDRB |= (1<<DDB0) | (1<<DDB1) | (1<<DDB2) | (1<<DDB3);
 	DDRB &= ~(1<<DDB4);
 	
 	DDRC &= ~((1<<DDC0) | (1<<DDC1) | (1<<DDC2));
@@ -53,12 +53,21 @@ int main(void){
 	OCR0A = 0;
 	OCR0B = 0;
 	
-
     lcd_init(LCD_ON_DISPLAY);
     lcd_backlight(1);
 	initHCSR04();
+	initDebugger();
 	millis_init();
-	remoteInit();
+	LCD_read_data();
+	
+	lcd_clrscr();
+	_delay_ms(20);
+	lcd_gotoxy(3,0);
+	_delay_ms(20);
+	lcd_puts("REMOTE");
+	_delay_ms(20);
+	LCD_time_call();
+	
 			
     while (1){
 		if(modeSwitch){
@@ -66,7 +75,8 @@ int main(void){
 			modeSwitch = false;
 		}		
 		modeChecker();
-		ledBlinker();	
+		ledBlinker();
+		LCD_time();	
 	}
 
 }

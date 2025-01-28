@@ -262,5 +262,12 @@ extern void lcd_data(uint8_t data);
 */
 #define lcd_puts_P(__s)         lcd_puts_p(PSTR(__s))
 
+LCD_time();
+LCD_time_call();
+time_Handler();
+LCD_Showtime_standard(int hours, int minutes);
+LCD_Showtime_call(int hours, int minutes);
+LCD_read_data();
+LCD_reset_eeprom();
 /*@}*/
 #endif //LCD_H
