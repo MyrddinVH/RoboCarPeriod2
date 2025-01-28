@@ -15,5 +15,6 @@ void tankTurnLeft(int speed);
 void tankTurnRight(int speed);
 void tankDirection(void);
 void arrowRemove(void);
+void showspeed();
 
 #endif /* MOTORCONTROL_H_ */

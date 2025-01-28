@@ -27,12 +27,15 @@ void remoteControl(void) {
 		switch (recievedData) {
 			case '1': // set speed 1 (80)
 				remoteSpeed = 80;
+				showSpeed();
 				break;
 			case '2': // set speed 2 (150)
 				remoteSpeed = 150;
+				showSpeed();
 				break;
 			case '3': // set speed 3 (255)
 				remoteSpeed = 255;
+				showSpeed();
 				break;
 			case 'b': //stop  
 				motorForward(0,0);
