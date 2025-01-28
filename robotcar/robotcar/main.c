@@ -53,20 +53,20 @@ int main(void){
 	OCR0A = 0;
 	OCR0B = 0;
 	
-    lcd_init(LCD_ON_DISPLAY);
-    lcd_backlight(1);
-	initHCSR04();
+    lcd_init(LCD_ON_DISPLAY); // Standard init function for LCD
+    lcd_backlight(1);	// turn on lcd backlight
+	initHCSR04();	  // initialise ultrasoon hardware
 	initDebugger();
-	millis_init();
-	LCD_read_data();
+	millis_init();	  // initialise milis function
+	LCD_read_data();  // Reads data for user time
 	
-	lcd_clrscr();
+	lcd_clrscr();			// Displays right mode on intialise
 	_delay_ms(20);
 	lcd_gotoxy(3,0);
 	_delay_ms(20);
 	lcd_puts("REMOTE");
 	_delay_ms(20);
-	LCD_time_call();
+	LCD_time_call();      // Displays user time on init
 	
 			
     while (1){
